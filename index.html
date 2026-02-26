@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Riesgo | Perfil de Inversión Inteligente</title>
+    <meta name="description"
+        content="Descubre tu perfil de riesgo con nuestra calculadora avanzada. Toma decisiones financieras informadas hoy.">
+
+    <!-- Google Fonts: Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+
+    <header>
+        <div class="logo">RIESGO.DIGITAL</div>
+        <nav class="nav-links">
+            <a href="#" onclick="showSection('hero')">Inicio</a>
+            <a href="#" onclick="showSection('quiz')">Diagnóstico</a>
+            <a href="#">Recursos</a>
+        </nav>
+        <div class="auth-buttons">
+            <button class="btn btn-primary" onclick="showSection('auth')">Comenzar</button>
+        </div>
+    </header>
+
+    <main id="app-content">
+        <!-- Hero Section -->
+        <section id="hero-section" class="section active">
+            <div class="hero">
+                <h1>Diagnóstico Digital de <span style="color: var(--secondary)">Riesgo Operativo</span></h1>
+                <p>Identifique el nivel real de exposición al riesgo operativo, económico y legal de su empresa en solo
+                    10-15 minutos.</p>
+                <button class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;"
+                    onclick="showSection('auth')">Comenzar Diagnóstico</button>
+            </div>
+        </section>
+
+        <!-- Step 1: Lead Capture Form -->
+        <section id="auth-section" class="section">
+            <div class="container-center">
+                <div class="card auth-container">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <span class="step-badge">Paso 1</span>
+                        <h2 style="font-size: 2rem; margin-top: 1rem;">Registro de Datos</h2>
+                        <p style="color: var(--text-muted);">Complete la información para iniciar su evaluación
+                            adaptada.</p>
+                    </div>
+                    <form id="register-form" onsubmit="handleAuth(event)">
+                        <div class="form-group">
+                            <label>Nombre completo</label>
+                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <select id="user-role" required>
+                                <option value="" disabled selected>Seleccione su cargo</option>
+                                <option value="Gerente de Logística">Gerente de Logística</option>
+                                <option value="Operaciones">Operaciones</option>
+                                <option value="RRHH">RRHH</option>
+                                <option value="Dueño">Dueño</option>
+                                <option value="Seguridad e Higiene">Seguridad e Higiene</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Empresa</label>
+                            <input type="text" id="user-company" placeholder="Nombre de su organización" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Correo electrónico corporativo</label>
+                            <input type="email" id="user-email" placeholder="email@empresa.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; margin-top: 1rem; padding: 1.1rem;">
+                            Iniciar Diagnóstico
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="section">
+            <div class="card">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <div id="question-count" class="step-badge">Pregunta 1 de 14</div>
+                    <div style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">EN PROGRESO</div>
+                </div>
+
+                <h2 id="question-text" style="font-size: 1.8rem; margin-bottom: 2.5rem; line-height: 1.3;">
+                    <!-- Cargado dinámicamente -->
+                </h2>
+
+                <div id="quiz-options" class="quiz-grid">
+                    <!-- Opciones se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section" class="section">
+            <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
+                <div style="margin-bottom: 2rem;">
+                    <span class="step-badge"
+                        style="background: rgba(16, 185, 129, 0.1); color: var(--accent); border-color: rgba(16, 185, 129, 0.2);">Diagnóstico
+                        Completado</span>
+                </div>
+                <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Tu Perfil: <span id="risk-type">Calculando...</span>
+                </h2>
+                <div id="risk-description"
+                    style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3rem; line-height: 1.6;">
+                    <!-- Cargado dinámicamente -->
+                </div>
+                <div style="display: flex; gap: 1rem; justify-content: center;" class="no-print">
+                    <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
+                    <button class="btn" style="background: rgba(255,255,255,0.05); color: white;"
+                        onclick="window.print()">Descargar PDF</button>
+                </div>
+            </div>
+
+            <!-- Contenedor para impresión (oculto en pantalla) -->
+            <div id="pdf-container" class="print-only">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <h1 style="color: #000;">Informe de Diagnóstico de Riesgo</h1>
+                    <p style="color: #666;">LEX Recursos Humanos</p>
+                </div>
+                <pre id="pdf-content"
+                    style="white-space: pre-wrap; font-family: 'Outfit', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
+                    <!-- Cargado dinámicamente -->
+                </pre>
+            </div>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
