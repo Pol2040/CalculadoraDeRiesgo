@@ -1,6 +1,6 @@
-# 📊 Diagnóstico Digital de Riesgo Operativo
+# 📊 Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas
 
-> Evalúe el nivel de exposición al riesgo operativo, económico y legal de su empresa en menos de 15 minutos.
+> Mida el riesgo antes de que impacte en sus costos. Identifique riesgos, sobrecostos y puntos críticos antes de que se transformen en un siniestro evitable.
 
 Este proyecto es una herramienta interactiva diseñada para gerentes, dueños de empresas y responsables de logística que buscan identificar vulnerabilidades críticas en su operación de transporte y conducción profesional.
 
@@ -25,7 +25,7 @@ Este proyecto es una herramienta interactiva diseñada para gerentes, dueños de
 1. **Clona o descarga** este repositorio.
 2. Abre el archivo `index.html` en cualquier navegador moderno.
 3. Completa el registro inicial.
-4. Responde las 14 preguntas del diagnóstico.
+4. Responde las 14 preguntas de la radiografía.
 5. Descarga tu informe detallado en PDF.
 
 ---

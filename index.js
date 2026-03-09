@@ -173,14 +173,31 @@ function showSection(sectionName) {
 function handleAuth(event) {
     event.preventDefault();
 
-    state.leads = {
+    const userData = {
         name: document.getElementById('user-name').value,
         role: document.getElementById('user-role').value,
         company: document.getElementById('user-company').value,
         email: document.getElementById('user-email').value
     };
 
+    state.leads = userData;
+
+    // Ofrecer ser recordado usando las herramientas del navegador (confirm)
+    const shouldRemember = confirm(`${userData.name}, ¿deseas que te recordemos en este dispositivo para que la próxima vez entres directamente?`);
+
+    if (shouldRemember) {
+        localStorage.setItem('riesgo_user', JSON.stringify(userData));
+    } else {
+        localStorage.removeItem('riesgo_user');
+    }
+
     console.log('Lead capturado:', state.leads);
+
+    // Notificación visual breve
+    if (shouldRemember) {
+        console.log('Perfil guardado en este dispositivo.');
+    }
+
     showSection('quiz');
 }
 
@@ -207,7 +224,7 @@ function renderQuestion() {
     // Actualizar categoría y texto si existiera un elemento para categoría
     // Por ahora usamos el h2 existente para el texto
     document.getElementById('question-text').innerHTML = `
-        <span style="font-size: 0.9rem; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 0.5rem;">
+        <span class="category-label">
             ${question.category}
         </span>
         ${question.text}
@@ -248,38 +265,22 @@ function showResults() {
     const score = state.totalPoints;
     let riskType = '';
     let screenText = '';
-    let pdfText = '';
+    let emailBody = '';
+    let emailSubject = '';
     let accentColor = '';
-
-    const footerText = `
----------------------------------------------------------------------------------------------
-Gracias por completar el Diagnóstico de Riesgo Operativo en Conducción Profesional.
-
-Según el análisis realizado, su operación presenta un NIVEL DE RIESGO [LEVEL], [DESCRIPTION].
-
-Descargue el Informe Ejecutivo con el detalle del análisis y recomendaciones preventivas.
-
-Si lo considera oportuno, podemos agendar una reunión breve de análisis para revisar oportunidades de mejora y fortalecer lo que ya funciona correctamente.
-
-Saludos cordiales,
-Sergio De Rosa
-LEX Recursos Humanos`;
 
     if (score <= 20) {
         riskType = 'RIESGO BAJO';
         accentColor = '#10b981'; // Verde
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
-        pdfText = `RIESGO BAJO:
-La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.
----------------------------------------------------------------------------------------------
-Gracias por completar el Diagnóstico de Riesgo Operativo en Conducción Profesional.
-
-Según la información brindada, su operación presenta un NIVEL DE RIESGO BAJO, lo que indica que existen buenas prácticas instaladas en materia de conducción y gestión del riesgo.
-
-Descargue el Informe Ejecutivo con el detalle del análisis y recomendaciones preventivas.
-
-Si lo considera oportuno, podemos agendar una reunión breve de análisis para revisar oportunidades de mejora y fortalecer lo que ya funciona correctamente.
-
+        emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
+        emailBody = `Hola,
+Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
+Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
+Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
+Adjunto encontrará su Informe Ejecutivo con el detalle del análisis y recomendaciones preventivas.
+Si desea revisar oportunidades de mejora o fortalecer el enfoque actual, puedo coordinar una reunión breve de análisis.
+Quedo a disposición.
 Saludos cordiales,
 Sergio De Rosa
 LEX Recursos Humanos`;
@@ -287,45 +288,44 @@ LEX Recursos Humanos`;
         riskType = 'RIESGO MEDIO';
         accentColor = '#f59e0b'; // Amarillo/Ambar
         screenText = 'Se detectan prácticas que pueden derivar en siniestros evitables y aumento de costos si no se implementan acciones correctivas.';
-        pdfText = `RIESGO MEDIO:
-Se detectan prácticas que pueden derivar en siniestros evitables y aumento de costos si no se implementan acciones correctivas.
----------------------------------------------------------------------------------------------
-Gracias por completar el Diagnóstico de Riesgo Operativo en Conducción Profesional.
-
-De acuerdo con las respuestas obtenidas, su operación presenta un NIVEL DE RIESGO MEDIO, lo que implica una oportunidad concreta de mejora antes de que el riesgo se traduzca en siniestros evitables y sobrecostos.
-
-Adjunto encontrará el Informe Ejecutivo con los riesgos detectados y recomendaciones iniciales.
-
-Quedo a disposición para ampliar el análisis si lo considera oportuno.
-
-Saludos cordiales,
+        emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
+        emailBody = `Hola,
+Gracias por completar el diagnóstico.
+Según la información proporcionada, su operación presenta un NIVEL DE RIESGO MEDIO.
+Este nivel indica que existen prácticas y hábitos que podrían derivar en siniestros evitables o sobrecostos si no se intervienen de forma preventiva.
+Adjunto encontrará el Informe Ejecutivo con los factores detectados y recomendaciones iniciales.
+Este suele ser el punto ideal para actuar, ya que todavía es posible reducir la exposición antes de que el impacto sea mayor.
+Si le parece conveniente, podemos coordinar una reunión breve para analizar alternativas concretas de mejora.
+Quedo atento.
+Saludos,
 Sergio De Rosa
 LEX Recursos Humanos`;
     } else {
         riskType = 'RIESGO ALTO';
         accentColor = '#ef4444'; // Rojo
         screenText = 'Existe una alta exposición al riesgo operativo, económico y legal, incrementando la probabilidad de incidentes y sobrecostos.';
-        pdfText = `RIESGO ALTO:
-Existe una alta exposición al riesgo operativo, económico y legal, incrementando la probabilidad de incidentes y sobrecostos.
----------------------------------------------------------------------------------------------
-Gracias por completar el Diagnóstico de Riesgo Operativo en Conducción Profesional.
-
-Según el análisis realizado, su operación presenta un NIVEL DE RIESGO ALTO, con una exposición significativa en términos operativos, económicos y legales.
-
-Adjunto encontrará el Informe Ejecutivo con el detalle de los principales factores de riesgo y recomendaciones iniciales.
-
-Le sugiero evaluar el contenido con atención y quedo a disposición para profundizar el análisis.
-
+        emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
+        emailBody = `Hola,
+Gracias por completar la evaluación.
+Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO, lo que implica una exposición significativa en términos operativos, económicos y legales.
+Adjunto encontrará el Informe Ejecutivo con el detalle del análisis.
+En este tipo de escenarios, actuar de manera preventiva suele resultar considerablemente menos costoso que intervenir luego de un siniestro o incidente grave.
+Le sugiero coordinar una reunión breve para revisar el informe en detalle y evaluar alternativas concretas de reducción del riesgo.
+Quedo a disposición.
 Saludos cordiales,
 Sergio De Rosa
 LEX Recursos Humanos`;
     }
 
+    // Guardar el asunto y cuerpo para el envío posterior
+    state.currentEmailSubject = emailSubject;
+    state.currentEmailBody = emailBody;
+
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
     document.getElementById('risk-description').innerHTML = `
         <p>${screenText}</p>
-        <p style="margin-top: 1.5rem; font-style: italic; font-size: 1rem;">
+        <p class="result-note">
             Descargue el informe completo en PDF para ver el detalle de las recomendaciones.
         </p>
     `;
@@ -333,13 +333,144 @@ LEX Recursos Humanos`;
     // Preparar contenido para el PDF (oculto en pantalla)
     const pdfOutput = document.getElementById('pdf-content');
     if (pdfOutput) {
-        pdfOutput.innerText = pdfText;
+        pdfOutput.innerText = emailBody; // Usamos el mismo cuerpo extenso para el PDF
+
+        // Cargar datos del lead en el encabezado del PDF
+        document.getElementById('pdf-user-name').innerText = state.leads.name;
+        document.getElementById('pdf-user-company').innerText = state.leads.company;
+        document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
     }
 
     showSection('result');
 }
 
+/**
+ * Envía los resultados por correo electrónico de forma automática usando EmailJS
+ */
+function sendEmail() {
+    if (!state.leads.email) {
+        alert("No se encontró un correo electrónico asociado.");
+        return;
+    }
+
+    const btn = document.querySelector('.btn-secondary');
+    const originalText = btn.innerText;
+
+    // Estado de carga
+    btn.disabled = true;
+    btn.innerText = "Enviando...";
+
+    const riskType = document.getElementById('risk-type').innerText;
+    const reportContent = state.currentEmailBody || document.getElementById('pdf-content').innerText;
+    const emailSubject = state.currentEmailSubject || `Resultados Radiografía de Riesgo - ${riskType}`;
+
+    // Estos parámetros coinciden exactamente con tu nueva plantilla HTML
+    const templateParams = {
+        to_email: state.leads.email,
+        name: state.leads.name, // para {{name}}
+        time: new Date().toLocaleString(), // para {{time}}
+        message: reportContent, // para {{message}}
+        subject: emailSubject
+    };
+
+    // CONFIGURACIÓN: Reemplaza estos valores con los que obtengas de EmailJS
+    const SERVICE_ID = 'service_iroclp9';
+    const TEMPLATE_ID = 'template_dkpkqkf';
+    const PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+        .then(() => {
+            console.log('Email enviado con éxito a:', state.leads.email);
+            btn.innerText = "¡Enviado con éxito!";
+            btn.style.background = "#10b981"; // Verde éxito
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerText = originalText;
+                btn.style.background = ""; // Reset
+            }, 3000);
+        })
+        .catch((error) => {
+            console.error('Error detallado de EmailJS:', error);
+            let errorMessage = "Hubo un problema al enviar el correo.";
+
+            if (error.status === 401 || error.status === 403) {
+                errorMessage = "Error de autenticación con EmailJS. Por favor revise las credenciales.";
+            } else if (error.text) {
+                errorMessage = "Error: " + error.text;
+            }
+
+            alert(errorMessage);
+            btn.disabled = false;
+            btn.innerText = originalText;
+        });
+}
+
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Calculadora de Riesgo inicializada');
+    // Inicializamos EmailJS con tu Public Key
+    emailjs.init("QqvN175XJ37_kz0JR");
+    checkSavedUser();
 });
+
+/**
+ * Revisa si hay un usuario guardado en localStorage y salta el registro si existe
+ */
+function checkSavedUser() {
+    const savedUser = localStorage.getItem('riesgo_user');
+    if (savedUser) {
+        try {
+            const userData = JSON.parse(savedUser);
+            state.leads = userData;
+
+
+
+            console.log('Usuario recordado:', state.leads);
+
+            // Actualizar botones de "Comenzar"
+            const mainButtons = document.querySelectorAll('.btn-primary');
+            mainButtons.forEach(btn => {
+                const currentText = btn.innerText;
+                // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, etc.)
+                if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar')) {
+                    const firstName = userData.name.split(' ')[0];
+                    btn.innerText = `Continuar como ${firstName}`;
+
+                    // Asegurarnos de que el botón vaya al quiz
+                    btn.onclick = (e) => {
+                        e.preventDefault();
+                        showSection('quiz');
+                    };
+
+                    // Añadir link de "No soy yo" (evitar duplicados)
+                    if (!document.getElementById('logout-link')) {
+                        const logoutLink = document.createElement('a');
+                        logoutLink.id = 'logout-link';
+                        logoutLink.href = '#';
+                        logoutLink.innerText = 'Cambiar usuario';
+                        logoutLink.className = 'logout-link';
+                        logoutLink.onclick = (e) => {
+                            e.preventDefault();
+                            logout();
+                        };
+                        btn.after(logoutLink);
+                    }
+                }
+            });
+
+        } catch (e) {
+            console.error('Error al cargar usuario guardado', e);
+            localStorage.removeItem('riesgo_user');
+        }
+    }
+}
+
+/**
+ * Limpia los datos guardados y reinicia la vista
+ */
+function logout() {
+    localStorage.removeItem('riesgo_user');
+    state.leads = { name: '', role: '', company: '', email: '' };
+
+    // Recargar para limpiar todo el estado limpiamente
+    window.location.reload();
+}

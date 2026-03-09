@@ -10,7 +10,13 @@
     --error: #ef4444;
     --glass: rgba(30, 41, 59, 0.7);
     --border: rgba(255, 255, 255, 0.1);
-    --font-main: 'Outfit', 'Inter', system-ui, -apple-system, sans-serif;
+    --font-main: 'Open Sans', 'Inter', system-ui, -apple-system, sans-serif;
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+    --fw-extrabold: 800;
 }
 
 * {
@@ -23,6 +29,7 @@ body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: var(--font-main);
+    font-weight: var(--fw-regular);
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -55,7 +62,7 @@ header {
 
 .logo {
     font-size: 1.5rem;
-    font-weight: 800;
+    font-weight: var(--fw-extrabold);
     background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
     background-clip: text;
@@ -72,7 +79,7 @@ header {
 .nav-links a {
     color: var(--text-muted);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: var(--fw-medium);
     transition: all 0.3s ease;
 }
 
@@ -84,7 +91,7 @@ header {
     padding: 0.75rem 1.5rem;
     border-radius: 12px;
     border: none;
-    font-weight: 600;
+    font-weight: var(--fw-semibold);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     font-family: inherit;
@@ -99,6 +106,23 @@ header {
     transform: translateY(-2px);
     box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
     background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: white;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.4);
+    opacity: 0.9;
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 main {
@@ -116,7 +140,8 @@ main {
     font-size: 4rem;
     line-height: 1.1;
     margin-bottom: 1.5rem;
-    font-weight: 800;
+    font-weight: var(--fw-bold);
+    letter-spacing: -0.02em;
 }
 
 .hero p {
@@ -124,6 +149,7 @@ main {
     color: var(--text-muted);
     max-width: 600px;
     margin: 0 auto 2.5rem;
+    font-weight: var(--fw-light);
 }
 
 .card {
@@ -154,6 +180,8 @@ main {
     display: block;
     margin-bottom: 0.5rem;
     color: var(--text-muted);
+    font-weight: var(--fw-semibold);
+    font-size: 0.9rem;
 }
 
 .form-group input,
@@ -197,10 +225,20 @@ main {
     padding: 0.4rem 1rem;
     border-radius: 20px;
     font-size: 0.85rem;
-    font-weight: 700;
+    font-weight: var(--fw-bold);
     text-transform: uppercase;
     letter-spacing: 1px;
     border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+.category-label {
+    font-size: 0.85rem;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: var(--fw-bold);
 }
 
 /* Hidden segments for SPA navigation */
@@ -250,7 +288,7 @@ main {
     color: var(--text-main);
     text-align: left;
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: var(--fw-medium);
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
@@ -282,16 +320,39 @@ main {
     border-radius: 4px;
 }
 
+.result-note {
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    font-weight: var(--fw-light);
+}
+
 /* Print Styles */
 .print-only {
     display: none;
+}
+
+.logout-link {
+    display: block;
+    margin-top: 0.65rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-decoration: underline;
+    opacity: 0.8;
+    text-align: center;
+}
+
+.logout-link:hover {
+    color: var(--primary);
+    opacity: 1;
 }
 
 @media print {
     body {
         background: white !important;
         color: black !important;
-        font-family: Arial, sans-serif !important;
+        font-family: 'Open Sans', Arial, sans-serif !important;
     }
 
     .bg-mesh,
