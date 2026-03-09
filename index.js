@@ -274,12 +274,10 @@ function showResults() {
         accentColor = '#10b981'; // Verde
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-        emailBody = `Hola,
+        emailBody = `Hola, ${state.leads.name}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
 Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
-Adjunto encontrará su Informe Ejecutivo con el detalle del análisis y recomendaciones preventivas.
-Si desea revisar oportunidades de mejora o fortalecer el enfoque actual, puedo coordinar una reunión breve de análisis.
 Quedo a disposición.
 Saludos cordiales,
 Sergio De Rosa
@@ -289,13 +287,10 @@ LEX Recursos Humanos`;
         accentColor = '#f59e0b'; // Amarillo/Ambar
         screenText = 'Se detectan prácticas que pueden derivar en siniestros evitables y aumento de costos si no se implementan acciones correctivas.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-        emailBody = `Hola,
+        emailBody = `Hola, ${state.leads.name}
 Gracias por completar el diagnóstico.
 Según la información proporcionada, su operación presenta un NIVEL DE RIESGO MEDIO.
 Este nivel indica que existen prácticas y hábitos que podrían derivar en siniestros evitables o sobrecostos si no se intervienen de forma preventiva.
-Adjunto encontrará el Informe Ejecutivo con los factores detectados y recomendaciones iniciales.
-Este suele ser el punto ideal para actuar, ya que todavía es posible reducir la exposición antes de que el impacto sea mayor.
-Si le parece conveniente, podemos coordinar una reunión breve para analizar alternativas concretas de mejora.
 Quedo atento.
 Saludos,
 Sergio De Rosa
@@ -305,12 +300,9 @@ LEX Recursos Humanos`;
         accentColor = '#ef4444'; // Rojo
         screenText = 'Existe una alta exposición al riesgo operativo, económico y legal, incrementando la probabilidad de incidentes y sobrecostos.';
         emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
-        emailBody = `Hola,
+        emailBody = `Hola, ${state.leads.name}
 Gracias por completar la evaluación.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO, lo que implica una exposición significativa en términos operativos, económicos y legales.
-Adjunto encontrará el Informe Ejecutivo con el detalle del análisis.
-En este tipo de escenarios, actuar de manera preventiva suele resultar considerablemente menos costoso que intervenir luego de un siniestro o incidente grave.
-Le sugiero coordinar una reunión breve para revisar el informe en detalle y evaluar alternativas concretas de reducción del riesgo.
 Quedo a disposición.
 Saludos cordiales,
 Sergio De Rosa
@@ -372,6 +364,9 @@ function sendEmail() {
         message: reportContent, // para {{message}}
         subject: emailSubject
     };
+
+    console.log('Iniciando envío de email a:', state.leads.email);
+    console.log('Parámetros enviados:', templateParams);
 
     // CONFIGURACIÓN: Reemplaza estos valores con los que obtengas de EmailJS
     const SERVICE_ID = 'service_iroclp9';
