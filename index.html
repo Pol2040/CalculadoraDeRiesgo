@@ -8,12 +8,11 @@
     <meta name="description"
         content="Descubre tu perfil de riesgo con nuestra calculadora avanzada. Toma decisiones financieras informadas hoy.">
 
-    <!-- Google Fonts: Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 
 <body>
@@ -23,7 +22,7 @@
         <div class="logo">RIESGO.DIGITAL</div>
         <nav class="nav-links">
             <a href="#" onclick="showSection('hero')">Inicio</a>
-            <a href="#" onclick="showSection('quiz')">Diagnóstico</a>
+            <a href="#" onclick="showSection('quiz')">Radiografía</a>
         </nav>
         <div class="auth-buttons">
             <button class="btn btn-primary" onclick="showSection('auth')">Comenzar</button>
@@ -34,11 +33,18 @@
         <!-- Hero Section -->
         <section id="hero-section" class="section active">
             <div class="hero">
-                <h1>Diagnóstico Digital de <span style="color: var(--secondary)">Riesgo Operativo</span></h1>
-                <p>Identifique el nivel real de exposición al riesgo operativo, económico y legal de su empresa en solo
-                    10-15 minutos.</p>
+                <h1>Radiografía Ejecutiva de <span style="color: var(--secondary)">Riesgo Operativo en Transporte de
+                        Cargas</span></h1>
+                <p>Mida el riesgo antes de que impacte en sus costos. Identifique riesgos, sobrecostos y puntos críticos
+                    antes de que se transformen en un siniestro evitable.</p>
                 <button class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;"
-                    onclick="showSection('auth')">Comenzar Diagnóstico</button>
+                    onclick="showSection('auth')">Comenzar Radiografía</button>
+                <p
+                    style="font-size: 0.95rem; color: var(--text-muted); max-width: 700px; margin: 1.5rem auto 0; line-height: 1.5;">
+                    Diagnóstico confidencial, sin costo y sin compromiso. Resultado inmediato al finalizar. <br>
+                    Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se
+                    recomienda una reunión de análisis personalizada.
+                </p>
             </div>
         </section>
 
@@ -77,8 +83,8 @@
                             <input type="email" id="user-email" placeholder="email@empresa.com" required>
                         </div>
                         <button type="submit" class="btn btn-primary"
-                            style="width: 100%; margin-top: 1rem; padding: 1.1rem;">
-                            Iniciar Diagnóstico
+                            style="width: 100%; margin-top: 1.5rem; padding: 1.1rem;">
+                            Iniciar Radiografía
                         </button>
                     </form>
                 </div>
@@ -108,8 +114,8 @@
             <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
                 <div style="margin-bottom: 2rem;">
                     <span class="step-badge"
-                        style="background: rgba(16, 185, 129, 0.1); color: var(--accent); border-color: rgba(16, 185, 129, 0.2);">Diagnóstico
-                        Completado</span>
+                        style="background: rgba(16, 185, 129, 0.1); color: var(--accent); border-color: rgba(16, 185, 129, 0.2);">Radiografía
+                        Completada</span>
                 </div>
                 <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Tu Perfil: <span id="risk-type">Calculando...</span>
                 </h2>
@@ -121,17 +127,24 @@
                     <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
                     <button class="btn" style="background: rgba(255,255,255,0.05); color: white;"
                         onclick="window.print()">Descargar PDF</button>
+                    <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button>
                 </div>
             </div>
 
             <!-- Contenedor para impresión (oculto en pantalla) -->
             <div id="pdf-container" class="print-only">
                 <div style="text-align: center; margin-bottom: 2rem;">
-                    <h1 style="color: #000;">Informe de Diagnóstico de Riesgo</h1>
+                    <h1 style="color: #000;">Informe de Radiografía Ejecutiva de Riesgo</h1>
                     <p style="color: #666;">LEX Recursos Humanos</p>
+                    <div
+                        style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; font-size: 10pt; color: #333; text-align: left;">
+                        <p><strong>PARA:</strong> <span id="pdf-user-name"></span></p>
+                        <p><strong>EMPRESA:</strong> <span id="pdf-user-company"></span></p>
+                        <p><strong>FECHA:</strong> <span id="pdf-date"></span></p>
+                    </div>
                 </div>
                 <pre id="pdf-content"
-                    style="white-space: pre-wrap; font-family: 'Outfit', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
+                    style="white-space: pre-wrap; font-family: 'Open Sans', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
                     <!-- Cargado dinámicamente -->
                 </pre>
             </div>
