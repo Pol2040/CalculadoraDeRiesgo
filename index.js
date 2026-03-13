@@ -146,7 +146,11 @@ const state = {
     },
     currentQuestionIndex: 0,
     totalPoints: 0,
-    answers: []
+    answers: [],
+    currentEmailSubject: '',
+    currentEmailBody: '',
+    // URL de Google Apps Script (Reemplazar con la URL generada al implementar el script)
+    googleSheetUrl: 'https://script.google.com/macros/s/AKfycbwOp9v-OlWGMuc2ni0gN1PdOA4KzOLpo5e2k9EkiqMGhjntWEDjE0d95w7XqDXqud0K/exec'
 };
 
 /**
@@ -333,7 +337,45 @@ LEX Recursos Humanos`;
         document.getElementById('pdf-date').innerText = new Date().toLocaleDateString();
     }
 
+    // Guardar automáticamente en Google Sheets
+    const dataToSave = {
+        name: state.leads.name,
+        email: state.leads.email,
+        company: state.leads.company,
+        role: state.leads.role,
+        riskType: riskType,
+        points: score
+    };
+    saveToGoogleSheet(dataToSave);
+
     showSection('result');
+}
+
+/**
+ * Envía los datos a Google Sheets usando Apps Script
+ */
+async function saveToGoogleSheet(data) {
+    if (!state.googleSheetUrl || state.googleSheetUrl.includes('XXXXXXXXXXXX')) {
+        console.warn('Google Sheets URL no configurada correctamente.');
+        return;
+    }
+
+    try {
+        // Usamos mode: 'no-cors' ya que Google Apps Script a veces da problemas con CORS
+        // aunque el éxito no sea detectable desde JS, el dato llega a la hoja.
+        await fetch(state.googleSheetUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        console.log('Datos enviados a Google Sheets');
+    } catch (error) {
+        console.error('Error al enviar a Google Sheets:', error);
+    }
 }
 
 /**
