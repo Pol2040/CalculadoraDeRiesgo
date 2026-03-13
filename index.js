@@ -361,9 +361,9 @@ async function saveToGoogleSheet(data) {
         return;
     }
 
+    console.log('📤 Enviando datos a Google Sheets:', data);
+
     try {
-        // Usamos mode: 'no-cors' ya que Google Apps Script a veces da problemas con CORS
-        // aunque el éxito no sea detectable desde JS, el dato llega a la hoja.
         await fetch(state.googleSheetUrl, {
             method: 'POST',
             mode: 'no-cors',
@@ -373,9 +373,9 @@ async function saveToGoogleSheet(data) {
             },
             body: JSON.stringify(data)
         });
-        console.log('Datos enviados a Google Sheets');
+        console.log('✅ Datos enviados con éxito (revisa tu hoja de cálculo).');
     } catch (error) {
-        console.error('Error al enviar a Google Sheets:', error);
+        console.error('❌ Error al enviar a Google Sheets:', error);
     }
 }
 
