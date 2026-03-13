@@ -242,7 +242,7 @@ function renderQuestion() {
         const button = document.createElement('button');
         button.className = 'quiz-option';
         button.innerText = option.text;
-        button.onclick = () => handleAnswer(option.points);
+        button.onclick = () => handleAnswer(option.points, index + 1); // Pasamos el número de respuesta (1, 2, 3)
         optionsContainer.appendChild(button);
     });
 }
@@ -250,9 +250,9 @@ function renderQuestion() {
 /**
  * Procesa la respuesta seleccionada
  */
-function handleAnswer(points) {
+function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
-    state.answers.push(points);
+    state.answers.push({ points, optionNumber });
 
     if (state.currentQuestionIndex < QUESTIONS.length - 1) {
         state.currentQuestionIndex++;
@@ -344,7 +344,8 @@ LEX Recursos Humanos`;
         company: state.leads.company,
         role: state.leads.role,
         riskType: riskType,
-        points: score
+        points: score,
+        individualAnswers: state.answers.map(a => a.optionNumber) // Array con [1, 3, 2, ...]
     };
     saveToGoogleSheet(dataToSave);
 
