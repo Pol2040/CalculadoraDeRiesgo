@@ -24,9 +24,9 @@
             <a href="#" onclick="showSection('hero')">Inicio</a>
             <a href="#" onclick="startQuiz()">Radiografía</a>
         </nav>
-        <div class="auth-buttons" style="display: flex; gap: 1rem; align-items: center;">
-            <button id="nav-register-btn" class="btn" style="background: transparent; border: 1px solid rgba(255,255,255,0.2);" onclick="showSection('auth')">Registrarse</button>
+        <div class="auth-buttons">
             <button class="btn btn-primary" onclick="startQuiz()">Comenzar</button>
+            <a href="#" id="nav-register-btn" class="logout-link" onclick="showSection('auth'); return false;">Registrarse</a>
         </div>
     </header>
 
