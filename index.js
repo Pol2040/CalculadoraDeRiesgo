@@ -164,10 +164,6 @@ function showSection(sectionName) {
     if (targetSection) {
         targetSection.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        if (sectionName === 'quiz') {
-            startQuiz();
-        }
     }
 }
 
@@ -203,6 +199,15 @@ function handleAuth(event) {
     }
 
     showSection('quiz');
+
+    if (state.answers.length > state.currentQuestionIndex) {
+        if (state.currentQuestionIndex < QUESTIONS.length - 1) {
+            state.currentQuestionIndex++;
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
 }
 
 /**
@@ -212,6 +217,7 @@ function startQuiz() {
     state.currentQuestionIndex = 0;
     state.totalPoints = 0;
     state.answers = [];
+    showSection('quiz');
     renderQuestion();
 }
 
@@ -253,6 +259,11 @@ function renderQuestion() {
 function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
     state.answers.push({ points, optionNumber });
+
+    if (state.currentQuestionIndex === 3 && !state.leads.email) {
+        showSection('auth');
+        return;
+    }
 
     if (state.currentQuestionIndex < QUESTIONS.length - 1) {
         state.currentQuestionIndex++;
@@ -476,7 +487,7 @@ function checkSavedUser() {
                     // Asegurarnos de que el botón vaya al quiz
                     btn.onclick = (e) => {
                         e.preventDefault();
-                        showSection('quiz');
+                        startQuiz();
                     };
 
                     // Añadir link de "No soy yo" (evitar duplicados)

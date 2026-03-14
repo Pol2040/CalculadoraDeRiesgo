@@ -22,10 +22,10 @@
         <div class="logo">RIESGO.DIGITAL</div>
         <nav class="nav-links">
             <a href="#" onclick="showSection('hero')">Inicio</a>
-            <a href="#" onclick="showSection('quiz')">Radiografía</a>
+            <a href="#" onclick="startQuiz()">Radiografía</a>
         </nav>
         <div class="auth-buttons">
-            <button class="btn btn-primary" onclick="showSection('auth')">Comenzar</button>
+            <button class="btn btn-primary" onclick="startQuiz()">Comenzar</button>
         </div>
     </header>
 
@@ -38,7 +38,7 @@
                 <p>Mida el riesgo antes de que impacte en sus costos. Identifique riesgos, sobrecostos y puntos críticos
                     antes de que se transformen en un siniestro evitable.</p>
                 <button class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;"
-                    onclick="showSection('auth')">Comenzar Radiografía</button>
+                    onclick="startQuiz()">Comenzar Radiografía</button>
                 <p
                     style="font-size: 0.95rem; color: var(--text-muted); max-width: 700px; margin: 1.5rem auto 0; line-height: 1.5;">
                     Diagnóstico confidencial, sin costo y sin compromiso. Resultado inmediato al finalizar. <br>
@@ -53,10 +53,10 @@
             <div class="container-center">
                 <div class="card auth-container">
                     <div style="text-align: center; margin-bottom: 2rem;">
-                        <span class="step-badge">Paso 1</span>
+                        <span class="step-badge">Registro</span>
                         <h2 style="font-size: 2rem; margin-top: 1rem;">Registro de Datos</h2>
-                        <p style="color: var(--text-muted);">Complete la información para iniciar su evaluación
-                            adaptada.</p>
+                        <p style="color: var(--text-muted);">Complete la información para continuar con la evaluación
+                            y conocer sus resultados.</p>
                     </div>
                     <form id="register-form" onsubmit="handleAuth(event)">
                         <div class="form-group">
@@ -84,7 +84,7 @@
                         </div>
                         <button type="submit" class="btn btn-primary"
                             style="width: 100%; margin-top: 1.5rem; padding: 1.1rem;">
-                            Iniciar Radiografía
+                            Continuar Radiografía
                         </button>
                     </form>
                 </div>
