@@ -211,6 +211,8 @@ function handleAuth(event) {
         } else {
             showResults();
         }
+    } else {
+        renderQuestion();
     }
 
     // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía"
@@ -237,6 +239,8 @@ function skipAuth() {
         } else {
             showResults();
         }
+    } else {
+        renderQuestion();
     }
 
     // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía"
