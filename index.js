@@ -199,6 +199,9 @@ function handleAuth(event) {
         console.log('Perfil guardado en este dispositivo.');
     }
 
+    alert('¡Registro completado con éxito!');
+    updateAuthUI(state.leads);
+
     showSection('quiz');
 
     if (state.answers.length > state.currentQuestionIndex) {
@@ -480,6 +483,44 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
+ * Actualiza la interfaz para mostrar el usuario activo
+ */
+function updateAuthUI(userData) {
+    if (!userData || !userData.name) return;
+
+    // Actualizar botones de "Comenzar"
+    const mainButtons = document.querySelectorAll('.btn-primary');
+    mainButtons.forEach(btn => {
+        const currentText = btn.innerText;
+        // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, etc.)
+        if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar')) {
+            const firstName = userData.name.split(' ')[0];
+            btn.innerText = `Continuar como ${firstName}`;
+
+            // Asegurarnos de que el botón vaya al quiz
+            btn.onclick = (e) => {
+                e.preventDefault();
+                startQuiz();
+            };
+
+            // Añadir link de "No soy yo" (evitar duplicados)
+            if (!document.getElementById('logout-link')) {
+                const logoutLink = document.createElement('a');
+                logoutLink.id = 'logout-link';
+                logoutLink.href = '#';
+                logoutLink.innerText = 'Cambiar usuario';
+                logoutLink.className = 'logout-link';
+                logoutLink.onclick = (e) => {
+                    e.preventDefault();
+                    logout();
+                };
+                btn.after(logoutLink);
+            }
+        }
+    });
+}
+
+/**
  * Revisa si hay un usuario guardado en localStorage y salta el registro si existe
  */
 function checkSavedUser() {
@@ -488,42 +529,8 @@ function checkSavedUser() {
         try {
             const userData = JSON.parse(savedUser);
             state.leads = userData;
-
-
-
             console.log('Usuario recordado:', state.leads);
-
-            // Actualizar botones de "Comenzar"
-            const mainButtons = document.querySelectorAll('.btn-primary');
-            mainButtons.forEach(btn => {
-                const currentText = btn.innerText;
-                // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, etc.)
-                if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar')) {
-                    const firstName = userData.name.split(' ')[0];
-                    btn.innerText = `Continuar como ${firstName}`;
-
-                    // Asegurarnos de que el botón vaya al quiz
-                    btn.onclick = (e) => {
-                        e.preventDefault();
-                        startQuiz();
-                    };
-
-                    // Añadir link de "No soy yo" (evitar duplicados)
-                    if (!document.getElementById('logout-link')) {
-                        const logoutLink = document.createElement('a');
-                        logoutLink.id = 'logout-link';
-                        logoutLink.href = '#';
-                        logoutLink.innerText = 'Cambiar usuario';
-                        logoutLink.className = 'logout-link';
-                        logoutLink.onclick = (e) => {
-                            e.preventDefault();
-                            logout();
-                        };
-                        btn.after(logoutLink);
-                    }
-                }
-            });
-
+            updateAuthUI(userData);
         } catch (e) {
             console.error('Error al cargar usuario guardado', e);
             localStorage.removeItem('riesgo_user');
