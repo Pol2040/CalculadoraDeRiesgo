@@ -212,6 +212,15 @@ function handleAuth(event) {
             showResults();
         }
     }
+
+    // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía"
+    const mainButtons = document.querySelectorAll('.btn-primary');
+    mainButtons.forEach(btn => {
+        const currentText = btn.innerText.toLowerCase();
+        if (currentText.includes('comenzar') || currentText.includes('iniciar') || currentText.includes('continuar')) {
+            btn.innerText = 'Reiniciar Radiografía';
+        }
+    });
 }
 
 /**
@@ -229,6 +238,15 @@ function skipAuth() {
             showResults();
         }
     }
+
+    // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía"
+    const mainButtons = document.querySelectorAll('.btn-primary');
+    mainButtons.forEach(btn => {
+        const currentText = btn.innerText.toLowerCase();
+        if (currentText.includes('comenzar') || currentText.includes('iniciar') || currentText.includes('continuar')) {
+            btn.innerText = 'Reiniciar Radiografía';
+        }
+    });
 }
 
 /**
@@ -240,6 +258,15 @@ function startQuiz() {
     state.answers = [];
     showSection('quiz');
     renderQuestion();
+
+    // Cambiar los botones de inicio a "Reiniciar Radiografía"
+    const mainButtons = document.querySelectorAll('.btn-primary');
+    mainButtons.forEach(btn => {
+        const currentText = btn.innerText.toLowerCase();
+        if (currentText.includes('comenzar') || currentText.includes('iniciar') || currentText.includes('continuar')) {
+            btn.innerText = 'Reiniciar Radiografía';
+        }
+    });
 }
 
 /**
