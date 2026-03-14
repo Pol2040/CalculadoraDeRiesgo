@@ -515,6 +515,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function updateAuthUI(userData) {
     if (!userData || !userData.name) return;
 
+    // Ocultar botón de registrarse en la barra de navegación si está registrado
+    const navRegisterBtn = document.getElementById('nav-register-btn');
+    if (navRegisterBtn) {
+        navRegisterBtn.style.display = 'none';
+    }
+
     // Actualizar botones de "Comenzar"
     const mainButtons = document.querySelectorAll('.btn-primary');
     mainButtons.forEach(btn => {
