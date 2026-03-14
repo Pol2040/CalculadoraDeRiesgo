@@ -144,6 +144,7 @@ const state = {
         company: '',
         email: ''
     },
+    skippedAuth: false,
     currentQuestionIndex: 0,
     totalPoints: 0,
     answers: [],
@@ -211,6 +212,23 @@ function handleAuth(event) {
 }
 
 /**
+ * Permite omitir el registro y continuar el quiz
+ */
+function skipAuth() {
+    state.skippedAuth = true;
+    showSection('quiz');
+
+    if (state.answers.length > state.currentQuestionIndex) {
+        if (state.currentQuestionIndex < QUESTIONS.length - 1) {
+            state.currentQuestionIndex++;
+            renderQuestion();
+        } else {
+            showResults();
+        }
+    }
+}
+
+/**
  * Inicia el proceso del quiz
  */
 function startQuiz() {
@@ -260,7 +278,7 @@ function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
     state.answers.push({ points, optionNumber });
 
-    if (state.currentQuestionIndex === 3 && !state.leads.email) {
+    if (state.currentQuestionIndex === 3 && !state.leads.email && !state.skippedAuth) {
         showSection('auth');
         return;
     }
@@ -289,7 +307,7 @@ function showResults() {
         accentColor = '#10b981'; // Verde
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-        emailBody = `Hola, ${state.leads.name}
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
 Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
@@ -302,7 +320,7 @@ LEX Recursos Humanos`;
         accentColor = '#f59e0b'; // Amarillo/Ambar
         screenText = 'Se detectan prácticas que pueden derivar en siniestros evitables y aumento de costos si no se implementan acciones correctivas.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-        emailBody = `Hola, ${state.leads.name}
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar el diagnóstico.
 Según la información proporcionada, su operación presenta un NIVEL DE RIESGO MEDIO.
 Este nivel indica que existen prácticas y hábitos que podrían derivar en siniestros evitables o sobrecostos si no se intervienen de forma preventiva.
@@ -315,7 +333,7 @@ LEX Recursos Humanos`;
         accentColor = '#ef4444'; // Rojo
         screenText = 'Existe una alta exposición al riesgo operativo, económico y legal, incrementando la probabilidad de incidentes y sobrecostos.';
         emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
-        emailBody = `Hola, ${state.leads.name}
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la evaluación.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO, lo que implica una exposición significativa en términos operativos, económicos y legales.
 Quedo a disposición.
