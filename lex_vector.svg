@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+	<style>
+		.s0 { fill: #e21d48 } 
+		.s1 { fill: #9f133a } 
+	</style>
+	<g id="Layer 1">
+		<g id="Carpeta 1">
+			<path id="Forma 1" fill-rule="evenodd" class="s0" d="m245.03 96.21l-0.03 214.79-84.07-52.29-0.39-215.7z"/>
+			<path id="Forma 2" fill-rule="evenodd" class="s1" d="m347 156l-0.1 104.14-83.87 51.04-0.07-105.45z"/>
+		</g>
+	</g>
+</svg>

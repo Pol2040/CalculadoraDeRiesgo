@@ -471,10 +471,25 @@ function sendEmail() {
     console.log('Iniciando envío de email a:', state.leads.email);
     console.log('Parámetros enviados:', templateParams);
 
-    // CONFIGURACIÓN: Reemplaza estos valores con los que obtengas de EmailJS
-    const SERVICE_ID = 'service_iroclp9';
-    const TEMPLATE_ID = 'template_dkpkqkf';
-    const PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+    // CONFIGURACIÓN: Reemplaza estos valores con los de tus cuentas de EmailJS
+    let SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY;
+
+    if (riskType === 'RIESGO ALTO') {
+        // Cuenta 1: Riesgo Alto (Actualmente usando la cuenta original)
+        SERVICE_ID = 'service_iroclp9';
+        TEMPLATE_ID = 'template_dkpkqkf';
+        PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+    } else if (riskType === 'RIESGO MEDIO') {
+        // Cuenta 2: Riesgo Medio (Reemplazar con los datos de tu segunda cuenta)
+        SERVICE_ID = 'SERVICE_ID_MEDIO';
+        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO';
+        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO';
+    } else {
+        // Cuenta 3: Riesgo Bajo (Reemplazar con los datos de tu tercera cuenta)
+        SERVICE_ID = 'SERVICE_ID_BAJO';
+        TEMPLATE_ID = 'TEMPLATE_ID_BAJO';
+        PUBLIC_KEY = 'PUBLIC_KEY_BAJO';
+    }
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
         .then(() => {
@@ -505,8 +520,8 @@ function sendEmail() {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializamos EmailJS con tu Public Key
-    emailjs.init("QqvN175XJ37_kz0JR");
+    // Se comenta inicialización global para permitir usar distintas cuentas de EmailJS
+    // emailjs.init("QqvN175XJ37_kz0JR");
     checkSavedUser();
 });
 
