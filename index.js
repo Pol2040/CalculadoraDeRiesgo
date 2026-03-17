@@ -582,7 +582,7 @@ function sendEmail() {
     // Estos parámetros coinciden exactamente con tu nueva plantilla HTML
     const templateParams = {
         to_email: state.leads.email,
-        name: state.leads.name, // para {{name}}
+        name: 'LEX Recursos Humanos', // para {{name}}
         time: new Date().toLocaleString(), // para {{time}}
         message: reportContent, // para {{message}}
         subject: emailSubject
@@ -591,23 +591,10 @@ function sendEmail() {
     console.log('Iniciando envío de email a:', state.leads.email);
     console.log('Parámetros enviados:', templateParams);
 
-    // CONFIGURACIÓN: Reemplaza estos valores con los de tus cuentas de EmailJS
-    let SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY;
-
-    if (riskType === 'RIESGO ALTO') {
-        SERVICE_ID = 'service_iroclp9';
-        TEMPLATE_ID = 'template_dkpkqkf';
-        PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
-    } else if (riskType === 'RIESGO MEDIO') {
-        // Fallback a la cuenta principal si no se han configurado las otras
-        SERVICE_ID = 'SERVICE_ID_MEDIO' === 'SERVICE_ID_MEDIO' ? 'service_iroclp9' : 'SERVICE_ID_MEDIO';
-        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO' === 'TEMPLATE_ID_MEDIO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_MEDIO';
-        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO' === 'PUBLIC_KEY_MEDIO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_MEDIO';
-    } else {
-        SERVICE_ID = 'SERVICE_ID_BAJO' === 'SERVICE_ID_BAJO' ? 'service_iroclp9' : 'SERVICE_ID_BAJO';
-        TEMPLATE_ID = 'TEMPLATE_ID_BAJO' === 'TEMPLATE_ID_BAJO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_BAJO';
-        PUBLIC_KEY = 'PUBLIC_KEY_BAJO' === 'PUBLIC_KEY_BAJO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_BAJO';
-    }
+    // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
+    SERVICE_ID = 'service_iroclp9';
+    TEMPLATE_ID = 'template_dkpkqkf';
+    PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
         .then(() => {
@@ -647,7 +634,7 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
 
     const templateParams = {
         to_email: state.leads.email,
-        name: state.leads.name,
+        name: 'LEX Recursos Humanos',
         time: new Date().toLocaleString(),
         message: emailBody,
         subject: emailSubject
@@ -655,21 +642,10 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
 
     console.log('📤 Iniciando envío automático de email a:', state.leads.email);
 
-    let SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY;
-
-    if (riskType === 'RIESGO ALTO') {
-        SERVICE_ID = 'service_iroclp9';
-        TEMPLATE_ID = 'template_dkpkqkf';
-        PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
-    } else if (riskType === 'RIESGO MEDIO') {
-        SERVICE_ID = 'SERVICE_ID_MEDIO' === 'SERVICE_ID_MEDIO' ? 'service_iroclp9' : 'SERVICE_ID_MEDIO';
-        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO' === 'TEMPLATE_ID_MEDIO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_MEDIO';
-        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO' === 'PUBLIC_KEY_MEDIO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_MEDIO';
-    } else {
-        SERVICE_ID = 'SERVICE_ID_BAJO' === 'SERVICE_ID_BAJO' ? 'service_iroclp9' : 'SERVICE_ID_BAJO';
-        TEMPLATE_ID = 'TEMPLATE_ID_BAJO' === 'TEMPLATE_ID_BAJO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_BAJO';
-        PUBLIC_KEY = 'PUBLIC_KEY_BAJO' === 'PUBLIC_KEY_BAJO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_BAJO';
-    }
+    // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
+    let SERVICE_ID = 'service_iroclp9';
+    let TEMPLATE_ID = 'template_dkpkqkf';
+    let PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
         .then(() => {
