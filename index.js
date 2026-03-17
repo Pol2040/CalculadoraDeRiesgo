@@ -332,49 +332,166 @@ function showResults() {
     let emailSubject = '';
     let accentColor = '';
 
+    let gmailButtonBody = '';
+
     if (score <= 20) {
         riskType = 'RIESGO BAJO';
         accentColor = '#10b981'; // Verde
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
+        
+        // Contenido original (para Email Automático y PDF)
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
 Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
 Quedo a disposición.
 Saludos cordiales,
-Sergio De Rosa
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
 LEX Recursos Humanos`;
+
+        // Contenido de Word (solo para el botón "Enviar por Gmail")
+        gmailButtonBody = `Informe Ejecutivo
+Diagnóstico de Riesgo Operativo en Conducción Profesional
+
+Empresa: ${state.leads.company || ''}  Fecha: ${new Date().toLocaleDateString()}
+
+Nivel de Riesgo Detectado
+RIESGO BAJO
+
+La operación presenta un bajo nivel de exposición al riesgo. Existen buenas prácticas instaladas, con oportunidades de mejora preventiva para sostener los resultados en el tiempo.
+Principales Riesgos Identificados
+Hábitos de conducción no alineados con los objetivos del negocio.
+Falta de seguimiento posterior a las capacitaciones.
+Costos indirectos no registrados.
+Exposición legal subestimada.
+
+Recomendaciones Iniciales
+Implementar un enfoque preventivo y medible.
+Alinear la conducción con los objetivos del negocio.
+Incorporar seguimiento y evaluación continua.
+Trabajar sobre hábitos reales, no solo contenidos teóricos.
+
+Saludos cordiales,
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
+
+Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
+
+Documento confidencial - Uso exclusivo de la empresa`;
+
     } else if (score <= 40) {
         riskType = 'RIESGO MEDIO';
         accentColor = '#f59e0b'; // Amarillo/Ambar
         screenText = 'Se detectan prácticas que pueden derivar en siniestros evitables y aumento de costos si no se implementan acciones correctivas.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
+
+        // Contenido original
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar el diagnóstico.
 Según la información proporcionada, su operación presenta un NIVEL DE RIESGO MEDIO.
 Este nivel indica que existen prácticas y hábitos que podrían derivar en siniestros evitables o sobrecostos si no se intervienen de forma preventiva.
 Quedo atento.
 Saludos,
-Sergio De Rosa
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
 LEX Recursos Humanos`;
+
+        // Contenido de Word
+        gmailButtonBody = `Informe Ejecutivo
+Diagnóstico de Riesgo Operativo en Conducción Profesional
+
+Empresa: ${state.leads.company || ''}  Fecha: ${new Date().toLocaleDateString()}
+
+Nivel de Riesgo Detectado
+RIESGO MEDIO
+
+La operación presenta un nivel medio de exposición al riesgo. Se detectan hábitos y prácticas que, de no corregirse, pueden derivar en siniestros evitables y aumento de costos.
+
+Principales Riesgos Identificados
+Hábitos de conducción no alineados con los objetivos del negocio.
+Falta de seguimiento posterior a las capacitaciones.
+Costos indirectos no registrados.
+Exposición legal subestimada.
+
+Recomendaciones Iniciales
+Implementar un enfoque preventivo y medible.
+Alinear la conducción con los objetivos del negocio.
+Incorporar seguimiento y evaluación continua.
+Trabajar sobre hábitos reales, no solo contenidos teóricos.
+
+Saludos cordiales,
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
+
+Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
+
+Documento confidencial - Uso exclusivo de la empresa`;
+
     } else {
         riskType = 'RIESGO ALTO';
         accentColor = '#ef4444'; // Rojo
         screenText = 'Existe una alta exposición al riesgo operativo, económico y legal, incrementando la probabilidad de incidentes y sobrecostos.';
         emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
+
+        // Contenido original
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la evaluación.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO, lo que implica una exposición significativa en términos operativos, económicos y legales.
 Quedo a disposición.
 Saludos cordiales,
-Sergio De Rosa
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
 LEX Recursos Humanos`;
+
+        // Contenido de Word
+        gmailButtonBody = `Informe Ejecutivo
+Diagnóstico de Riesgo Operativo en Conducción Profesional
+
+Empresa: ${state.leads.company || ''}  Fecha: ${new Date().toLocaleDateString()}
+
+Nivel de Riesgo Detectado
+RIESGO ALTO
+
+La operación presenta un alto nivel de exposición al riesgo operativo y económico, incrementando la probabilidad de accidentes evitables, sobrecostos y conflictos legales.
+Principales Riesgos Identificados
+Hábitos de conducción no alineados con los objetivos del negocio.
+Falta de seguimiento posterior a las capacitaciones.
+Costos indirectos no registrados.
+Exposición legal subestimada.
+
+Recomendaciones Iniciales
+Implementar un enfoque preventivo y medible.
+Alinear la conducción con los objetivos del negocio.
+Incorporar seguimiento y evaluación continua.
+Trabajar sobre hábitos reales, no solo contenidos teóricos.
+
+Saludos cordiales,
+Sergio De Rosa.
+Instructor en Seguridad Vial.
+Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
+Perito Auxiliar en Seguridad Vial y Accidentología.
+
+Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
+
+Documento confidencial - Uso exclusivo de la empresa`;
     }
 
-    // Guardar el asunto y cuerpo para el envío posterior
+    // Guardar los cuerpos por separado
     state.currentEmailSubject = emailSubject;
-    state.currentEmailBody = emailBody;
+    state.currentEmailBody = emailBody; // Original
+    state.gmailButtonBody = gmailButtonBody; // Word
 
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
@@ -459,7 +576,7 @@ function sendEmail() {
     btn.innerText = "Enviando...";
 
     const riskType = document.getElementById('risk-type').innerText;
-    const reportContent = state.currentEmailBody || document.getElementById('pdf-content').innerText;
+    const reportContent = state.gmailButtonBody || state.currentEmailBody || document.getElementById('pdf-content').innerText;
     const emailSubject = state.currentEmailSubject || `Resultados Radiografía de Riesgo - ${riskType}`;
 
     // Estos parámetros coinciden exactamente con tu nueva plantilla HTML
