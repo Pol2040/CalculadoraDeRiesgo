@@ -167,14 +167,6 @@ function showSection(sectionName) {
         targetSection.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-
-    if (sectionName === 'hero') {
-        const navBtn = document.getElementById('nav-start-btn');
-        if (navBtn && !state.leads.name) {
-            navBtn.style.display = 'inline-block';
-            navBtn.innerText = 'Comenzar';
-        }
-    }
 }
 
 /**
@@ -225,18 +217,12 @@ function handleAuth(event) {
         renderQuestion();
     }
 
-    // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía" solo si está registrado
-    const mainButtons = document.querySelectorAll('#nav-start-btn, #hero-start-btn');
-    mainButtons.forEach(btn => {
-        if (state.leads.name) {
-            btn.innerText = 'Reiniciar Radiografía';
-            btn.style.display = 'inline-block';
-        } else {
-            if (btn.id === 'nav-start-btn') {
-                btn.style.display = 'none';
-            }
-        }
-    });
+    // Asegurarse de que los botones de inicio ahora digan "Reiniciar radiografía"
+    const headerBtn = document.getElementById('header-start-btn');
+    if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
+    
+    const heroBtn = document.getElementById('hero-start-btn');
+    if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
 
 /**
@@ -257,18 +243,12 @@ function skipAuth() {
         renderQuestion();
     }
 
-    // Asegurarse de que los botones de inicio ahora digan "Reiniciar Radiografía" solo si está registrado
-    const mainButtons = document.querySelectorAll('#nav-start-btn, #hero-start-btn');
-    mainButtons.forEach(btn => {
-        if (state.leads.name) {
-            btn.innerText = 'Reiniciar Radiografía';
-            btn.style.display = 'inline-block';
-        } else {
-            if (btn.id === 'nav-start-btn') {
-                btn.style.display = 'none';
-            }
-        }
-    });
+    // Asegurarse de que los botones de inicio ahora digan "Reiniciar radiografía"
+    const headerBtn = document.getElementById('header-start-btn');
+    if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
+    
+    const heroBtn = document.getElementById('hero-start-btn');
+    if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
 
 /**
@@ -281,18 +261,12 @@ function startQuiz() {
     showSection('quiz');
     renderQuestion();
 
-    // Cambiar los botones de inicio a "Reiniciar Radiografía" solo si está registrado
-    const mainButtons = document.querySelectorAll('#nav-start-btn, #hero-start-btn');
-    mainButtons.forEach(btn => {
-        if (state.leads.name) {
-            btn.innerText = 'Reiniciar Radiografía';
-            btn.style.display = 'inline-block';
-        } else {
-            if (btn.id === 'nav-start-btn') {
-                btn.style.display = 'none';
-            }
-        }
-    });
+    // Cambiar los botones de inicio a "Reiniciar radiografía"
+    const headerBtn = document.getElementById('header-start-btn');
+    if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
+    
+    const heroBtn = document.getElementById('hero-start-btn');
+    if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
 
 /**
@@ -549,30 +523,35 @@ function updateAuthUI(userData) {
     }
 
     // Actualizar botones de "Comenzar"
-    const mainButtons = document.querySelectorAll('#nav-start-btn, #hero-start-btn');
-    mainButtons.forEach(btn => {
-        const firstName = userData.name.split(' ')[0];
-        btn.innerText = `Continuar como ${firstName}`;
-        btn.style.display = 'inline-block';
+    const buttonsToUpdate = [document.getElementById('header-start-btn'), document.getElementById('hero-start-btn')];
+    buttonsToUpdate.forEach(btn => {
+        if (!btn) return;
+        const currentText = btn.innerText;
+        // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, etc.)
+        if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar')) {
+            const firstName = userData.name.split(' ')[0];
+            btn.innerText = `Continuar como ${firstName}`;
 
-        // Asegurarnos de que el botón vaya al quiz
-        btn.onclick = (e) => {
-            e.preventDefault();
-            startQuiz();
-        };
-
-        // Añadir link de "No soy yo" (evitar duplicados)
-        if (!document.getElementById('logout-link') && btn.id === 'hero-start-btn') {
-            const logoutLink = document.createElement('a');
-            logoutLink.id = 'logout-link';
-            logoutLink.href = '#';
-            logoutLink.innerText = 'Cambiar usuario';
-            logoutLink.className = 'logout-link';
-            logoutLink.onclick = (e) => {
+            // Asegurarnos de que el botón vaya al quiz
+            btn.onclick = (e) => {
                 e.preventDefault();
-                logout();
+                startQuiz();
             };
-            btn.after(logoutLink);
+
+            // Añadir link de "No soy yo" (evitar duplicados)
+            const logoutId = 'logout-link-' + btn.id;
+            if (!document.getElementById(logoutId)) {
+                const logoutLink = document.createElement('a');
+                logoutLink.id = logoutId;
+                logoutLink.href = '#';
+                logoutLink.innerText = 'Cambiar usuario';
+                logoutLink.className = 'logout-link';
+                logoutLink.onclick = (e) => {
+                    e.preventDefault();
+                    logout();
+                };
+                btn.after(logoutLink);
+            }
         }
     });
 }
