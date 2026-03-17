@@ -220,7 +220,7 @@ function handleAuth(event) {
     // Asegurarse de que los botones de inicio ahora digan "Reiniciar radiografía"
     const headerBtn = document.getElementById('header-start-btn');
     if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
-    
+
     const heroBtn = document.getElementById('hero-start-btn');
     if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
@@ -246,7 +246,7 @@ function skipAuth() {
     // Asegurarse de que los botones de inicio ahora digan "Reiniciar radiografía"
     const headerBtn = document.getElementById('header-start-btn');
     if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
-    
+
     const heroBtn = document.getElementById('hero-start-btn');
     if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
@@ -264,7 +264,7 @@ function startQuiz() {
     // Cambiar los botones de inicio a "Reiniciar radiografía"
     const headerBtn = document.getElementById('header-start-btn');
     if (headerBtn) headerBtn.innerText = 'Reiniciar radiografía';
-    
+
     const heroBtn = document.getElementById('hero-start-btn');
     if (heroBtn) heroBtn.innerText = 'Reiniciar radiografía';
 }
