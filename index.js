@@ -595,20 +595,18 @@ function sendEmail() {
     let SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY;
 
     if (riskType === 'RIESGO ALTO') {
-        // Cuenta 1: Riesgo Alto (Actualmente usando la cuenta original)
         SERVICE_ID = 'service_iroclp9';
         TEMPLATE_ID = 'template_dkpkqkf';
         PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
     } else if (riskType === 'RIESGO MEDIO') {
-        // Cuenta 2: Riesgo Medio (Reemplazar con los datos de tu segunda cuenta)
-        SERVICE_ID = 'SERVICE_ID_MEDIO';
-        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO';
-        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO';
+        // Fallback a la cuenta principal si no se han configurado las otras
+        SERVICE_ID = 'SERVICE_ID_MEDIO' === 'SERVICE_ID_MEDIO' ? 'service_iroclp9' : 'SERVICE_ID_MEDIO';
+        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO' === 'TEMPLATE_ID_MEDIO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_MEDIO';
+        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO' === 'PUBLIC_KEY_MEDIO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_MEDIO';
     } else {
-        // Cuenta 3: Riesgo Bajo (Reemplazar con los datos de tu tercera cuenta)
-        SERVICE_ID = 'SERVICE_ID_BAJO';
-        TEMPLATE_ID = 'TEMPLATE_ID_BAJO';
-        PUBLIC_KEY = 'PUBLIC_KEY_BAJO';
+        SERVICE_ID = 'SERVICE_ID_BAJO' === 'SERVICE_ID_BAJO' ? 'service_iroclp9' : 'SERVICE_ID_BAJO';
+        TEMPLATE_ID = 'TEMPLATE_ID_BAJO' === 'TEMPLATE_ID_BAJO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_BAJO';
+        PUBLIC_KEY = 'PUBLIC_KEY_BAJO' === 'PUBLIC_KEY_BAJO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_BAJO';
     }
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
@@ -664,13 +662,13 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
         TEMPLATE_ID = 'template_dkpkqkf';
         PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
     } else if (riskType === 'RIESGO MEDIO') {
-        SERVICE_ID = 'SERVICE_ID_MEDIO';
-        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO';
-        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO';
+        SERVICE_ID = 'SERVICE_ID_MEDIO' === 'SERVICE_ID_MEDIO' ? 'service_iroclp9' : 'SERVICE_ID_MEDIO';
+        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO' === 'TEMPLATE_ID_MEDIO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_MEDIO';
+        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO' === 'PUBLIC_KEY_MEDIO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_MEDIO';
     } else {
-        SERVICE_ID = 'SERVICE_ID_BAJO';
-        TEMPLATE_ID = 'TEMPLATE_ID_BAJO';
-        PUBLIC_KEY = 'PUBLIC_KEY_BAJO';
+        SERVICE_ID = 'SERVICE_ID_BAJO' === 'SERVICE_ID_BAJO' ? 'service_iroclp9' : 'SERVICE_ID_BAJO';
+        TEMPLATE_ID = 'TEMPLATE_ID_BAJO' === 'TEMPLATE_ID_BAJO' ? 'template_dkpkqkf' : 'TEMPLATE_ID_BAJO';
+        PUBLIC_KEY = 'PUBLIC_KEY_BAJO' === 'PUBLIC_KEY_BAJO' ? 'QqvN175XJ37_kz0JR' : 'PUBLIC_KEY_BAJO';
     }
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
