@@ -1,4 +1,28 @@
 /**
+ * Gestión de Temas (Claro/Oscuro)
+ */
+function initTheme() {
+    const savedTheme = localStorage.getItem('theme');
+    // Predeterminado siempre a claro si no hay nada guardado
+    if (savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+}
+
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+}
+
+// Ejecutar inicialización de tema
+initTheme();
+
+/**
  * Lógica base de la Calculadora de Riesgo
  */
 

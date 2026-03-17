@@ -2,14 +2,14 @@
     --primary: #6366f1;
     --primary-hover: #4f46e5;
     --secondary: #0ea5e9;
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
+    --bg-dark: #f0f2f5;
+    --bg-card: #ffffff;
+    --text-main: #1a1f36;
+    --text-muted: #697386;
     --accent: #10b981;
     --error: #ef4444;
-    --glass: rgba(30, 41, 59, 0.7);
-    --border: rgba(255, 255, 255, 0.1);
+    --glass: rgba(255, 255, 255, 0.8);
+    --border: rgba(0, 0, 0, 0.08);
     --font-main: 'Open Sans', 'Inter', system-ui, -apple-system, sans-serif;
     --fw-light: 300;
     --fw-regular: 400;
@@ -19,10 +19,20 @@
     --fw-extrabold: 800;
 }
 
+[data-theme='dark'] {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --glass: rgba(30, 41, 59, 0.7);
+    --border: rgba(255, 255, 255, 0.1);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 body {
@@ -119,6 +129,17 @@ header {
     opacity: 0.9;
 }
 
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+}
+
+.btn-outline:hover {
+    background: var(--border);
+    transform: translateY(-2px);
+}
+
 .auth-buttons {
     display: flex;
     flex-direction: column;
@@ -157,8 +178,12 @@ main {
     border: 1px solid var(--border);
     padding: 2.5rem;
     border-radius: 24px;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+}
+
+[data-theme='dark'] .card {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .container-center {
@@ -188,10 +213,10 @@ main {
 .form-group select {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--bg-dark);
     border: 1px solid var(--border);
     border-radius: 12px;
-    color: white;
+    color: var(--text-main);
     font-family: inherit;
     font-size: 1rem;
     transition: all 0.3s ease;
@@ -200,22 +225,26 @@ main {
 .form-group select {
     appearance: none;
     cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 1rem center;
     background-size: 1.2rem;
 }
 
+[data-theme='dark'] .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+}
+
 .form-group select option {
     background: var(--bg-card);
-    color: white;
+    color: var(--text-main);
 }
 
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(255, 255, 255, 0.08);
+    background: var(--bg-card);
     box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
 }
 
@@ -281,7 +310,7 @@ main {
 }
 
 .quiz-option {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--bg-dark);
     border: 1px solid var(--border);
     padding: 1.5rem;
     border-radius: 16px;
@@ -315,7 +344,7 @@ main {
 
 #risk-description strong {
     color: var(--text-main);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(99, 102, 241, 0.1);
     padding: 0 4px;
     border-radius: 4px;
 }
@@ -341,6 +370,49 @@ main {
     text-decoration: underline;
     opacity: 0.8;
     text-align: center;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    background: var(--glass);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 1rem;
+}
+
+.theme-toggle:hover {
+    transform: rotate(15deg) scale(1.1);
+    background: var(--border);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+[data-theme='dark'] .sun-icon {
+    display: block;
+}
+
+[data-theme='dark'] .moon-icon {
+    display: none;
+}
+
+.sun-icon {
+    display: none;
+}
+
+.moon-icon {
+    display: block;
 }
 
 .logout-link:hover {
