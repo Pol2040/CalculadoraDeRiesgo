@@ -142,6 +142,7 @@ const state = {
         name: '',
         role: '',
         company: '',
+        fleetSize: '',
         email: ''
     },
     skippedAuth: false,
@@ -178,6 +179,7 @@ function handleAuth(event) {
         name: document.getElementById('user-name').value,
         role: document.getElementById('user-role').value,
         company: document.getElementById('user-company').value,
+        fleetSize: document.getElementById('user-fleet-size').value,
         email: document.getElementById('user-email').value
     };
 
@@ -405,6 +407,7 @@ LEX Recursos Humanos`;
         name: state.leads.name,
         email: state.leads.email,
         company: state.leads.company,
+        fleetSize: state.leads.fleetSize,
         role: state.leads.role,
         riskType: riskType,
         points: score,
@@ -580,7 +583,7 @@ function checkSavedUser() {
  */
 function logout() {
     localStorage.removeItem('riesgo_user');
-    state.leads = { name: '', role: '', company: '', email: '' };
+    state.leads = { name: '', role: '', company: '', fleetSize: '', email: '' };
 
     // Recargar para limpiar todo el estado limpiamente
     window.location.reload();
