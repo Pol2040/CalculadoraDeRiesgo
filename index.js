@@ -408,6 +408,9 @@ LEX Recursos Humanos`;
         individualAnswers: state.answers.map(a => a.optionNumber) // Array con [1, 3, 2, ...]
     };
     saveToGoogleSheet(dataToSave);
+    
+    // Envío automático de email al terminar
+    sendAutoEmail(riskType, emailSubject, emailBody);
 
     showSection('result');
 }
@@ -515,6 +518,50 @@ function sendEmail() {
             alert(errorMessage);
             btn.disabled = false;
             btn.innerText = originalText;
+        });
+}
+
+/**
+ * Envío automático y silencioso al finalizar el test
+ */
+function sendAutoEmail(riskType, emailSubject, emailBody) {
+    if (!state.leads.email) {
+        console.log('No se envía email automático: el usuario no proporcionó correo.');
+        return;
+    }
+
+    const templateParams = {
+        to_email: state.leads.email,
+        name: state.leads.name,
+        time: new Date().toLocaleString(),
+        message: emailBody,
+        subject: emailSubject
+    };
+
+    console.log('📤 Iniciando envío automático de email a:', state.leads.email);
+
+    let SERVICE_ID, TEMPLATE_ID, PUBLIC_KEY;
+
+    if (riskType === 'RIESGO ALTO') {
+        SERVICE_ID = 'service_iroclp9';
+        TEMPLATE_ID = 'template_dkpkqkf';
+        PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+    } else if (riskType === 'RIESGO MEDIO') {
+        SERVICE_ID = 'SERVICE_ID_MEDIO';
+        TEMPLATE_ID = 'TEMPLATE_ID_MEDIO';
+        PUBLIC_KEY = 'PUBLIC_KEY_MEDIO';
+    } else {
+        SERVICE_ID = 'SERVICE_ID_BAJO';
+        TEMPLATE_ID = 'TEMPLATE_ID_BAJO';
+        PUBLIC_KEY = 'PUBLIC_KEY_BAJO';
+    }
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
+        .then(() => {
+            console.log('✅ Email automático enviado con éxito.');
+        })
+        .catch((error) => {
+            console.error('❌ Error en el envío automático de EmailJS:', error);
         });
 }
 
