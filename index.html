@@ -16,6 +16,14 @@
 
     <link rel="stylesheet" href="index.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+        // Inicialización inmediata del tema para evitar destellos
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
 </head>
 
 <body>
@@ -28,7 +36,7 @@
         </div>
         <nav class="nav-links">
         </nav>
-        <div class="auth-buttons" style="flex-direction: row; gap: 0.5rem;">
+        <div class="auth-buttons" style="flex-direction: row; align-items: center; gap: 1.5rem;">
             <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Cambiar modo claro/oscuro">
                 <svg class="sun-icon" viewBox="0 0 24 24">
                     <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"></path>
@@ -37,7 +45,7 @@
                     <path d="M9.37 5.51c-.18-.64-.27-1.31-.27-1.99 0-.32.02-.63.06-.94C5.49 4.11 3 7.76 3 12c0 4.97 4.03 9 9 9 4.24 0 7.89-2.49 9.42-6.14-.31.04-.62.06-.94.06-6.63 0-12-5.37-12-12 0-.68.09-1.35.27-1.99z"></path>
                 </svg>
             </button>
-            <div style="display: flex; flex-direction: column; align-items: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; min-width: 180px;">
                 <button id="header-start-btn" class="btn btn-primary" onclick="startQuiz()">Comenzar Radiografía</button>
                 <a href="#" id="nav-register-btn" class="logout-link" onclick="showSection('auth'); return false;">Registrarse</a>
             </div>
@@ -48,8 +56,7 @@
         <!-- Hero Section -->
         <section id="hero-section" class="section active">
             <div class="hero">
-                <h1>Radiografía Ejecutiva de <span style="color: var(--secondary)">Riesgo Operativo en Transporte de
-                        Cargas</span></h1>
+                <h1>Radiografía Ejecutiva de <span style="color: var(--secondary)">Riesgo Operativo en Transporte de Cargas</span></h1>
                 <p>Mida el riesgo antes de que impacte en sus costos. Identifique riesgos, sobrecostos y puntos críticos
                     antes de que se transformen en un siniestro evitable.</p>
                 <button id="hero-start-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;"
@@ -151,18 +158,19 @@
 
             <!-- Contenedor para impresión (oculto en pantalla) -->
             <div id="pdf-container" class="print-only">
-                <div style="text-align: center; margin-bottom: 2rem;">
-                    <h1 style="color: #000;">Informe de Radiografía Ejecutiva de Riesgo</h1>
-                    <p style="color: #666;">LEX Recursos Humanos</p>
-                    <div
-                        style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1rem; font-size: 10pt; color: #333; text-align: left;">
-                        <p><strong>PARA:</strong> <span id="pdf-user-name"></span></p>
-                        <p><strong>EMPRESA:</strong> <span id="pdf-user-company"></span></p>
-                        <p><strong>FECHA:</strong> <span id="pdf-date"></span></p>
+                <div style="position: relative; margin-bottom: 2.5rem; padding-top: 4.5rem;">
+                    <img src="lex_vector.svg" alt="LEX Logo" style="position: absolute; top: 0; left: 0; height: 3.5rem; width: auto;">
+                    <div style="text-align: center;">
+                        <h1 style="color: #000; font-size: 26pt; font-weight: 800; margin-bottom: 0.2rem;">Informe de Radiografía Ejecutiva de Riesgo</h1>
+                        <p style="color: #666; font-size: 14pt;">LEX Recursos Humanos</p>
                     </div>
                 </div>
-                <pre id="pdf-content"
-                    style="white-space: pre-wrap; font-family: 'Open Sans', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
+                <div style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 11pt; color: #333; text-align: left; line-height: 1.6;">
+                    <p><strong>PARA:</strong> <span id="pdf-user-name"></span></p>
+                    <p><strong>EMPRESA:</strong> <span id="pdf-user-company"></span></p>
+                    <p><strong>FECHA:</strong> <span id="pdf-date"></span></p>
+                </div>
+                <pre id="pdf-content" style="white-space: pre-wrap; font-family: 'Open Sans', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
                     <!-- Cargado dinámicamente -->
                 </pre>
             </div>

@@ -1,26 +1,12 @@
-/**
- * Gestión de Temas (Claro/Oscuro)
- */
-function initTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    // Predeterminado siempre a claro si no hay nada guardado
-    if (savedTheme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-    }
-}
+// La inicialización del tema se realiza en el <head> del HTML para evitar destellos.
 
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
+
     document.documentElement.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 }
-
-// Ejecutar inicialización de tema
-initTheme();
 
 /**
  * Lógica base de la Calculadora de Riesgo
@@ -363,7 +349,7 @@ function showResults() {
         accentColor = '#10b981'; // Verde
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
-        
+
         // Contenido original (para Email Automático y PDF)
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
@@ -375,7 +361,8 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos`;
+LEX Recursos Humanos
+https://bio.site/LEXRRHH`;
 
         // Contenido de Word (solo para el botón "Enviar por Gmail")
         gmailButtonBody = `Informe Ejecutivo
@@ -404,6 +391,7 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
+https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -426,7 +414,8 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos`;
+LEX Recursos Humanos
+https://bio.site/LEXRRHH`;
 
         // Contenido de Word
         gmailButtonBody = `Informe Ejecutivo
@@ -456,6 +445,7 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
+https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -477,7 +467,8 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos`;
+LEX Recursos Humanos
+https://bio.site/LEXRRHH`;
 
         // Contenido de Word
         gmailButtonBody = `Informe Ejecutivo
@@ -506,6 +497,7 @@ Sergio De Rosa.
 Instructor en Seguridad Vial.
 Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
 Perito Auxiliar en Seguridad Vial y Accidentología.
+https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -549,7 +541,7 @@ Documento confidencial - Uso exclusivo de la empresa`;
         individualAnswers: state.answers.map(a => a.optionNumber) // Array con [1, 3, 2, ...]
     };
     saveToGoogleSheet(dataToSave);
-    
+
     // Envío automático de email al terminar
     sendAutoEmail(riskType, emailSubject, emailBody);
 
