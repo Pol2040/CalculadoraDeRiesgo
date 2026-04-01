@@ -35,6 +35,31 @@ const QUESTIONS = [
     },
     {
         category: 'Operación y Flota',
+        text: 'Determine sus "Mercancías peligrosas"',
+        multiSelect: true,
+        options: [
+            { text: '1. Explosivos (A_ pueden generar proyección de masa)', points: 0 },
+            { text: '1. Explosivos (B_ no pueden generar proyección de masa)', points: 0 },
+            { text: '2. Gases (A_ Gases no inflamables, no tóxicos)', points: 0 },
+            { text: '2. Gases (B_ Gases inflamables)', points: 0 },
+            { text: '2. Gases (C_ Gases tóxicos)', points: 0 },
+            { text: '3. Líquidos Inflamables', points: 0 },
+            { text: '4. Clase 4 (A_ Sólidos inflamables)', points: 0 },
+            { text: '4. Clase 4 (B_ Sustancias que experimentan combustion espontánea)', points: 0 },
+            { text: '4. Clase 4 (C_ Sustancias que reaccionan con el agua emitiendo gases inflamables)', points: 0 },
+            { text: '5. Comburentes, peróxidos orgánicos (A_ Sustancias oxidantes)', points: 0 },
+            { text: '5. Comburentes, peróxidos orgánicos (B_ Peróxidos orgánicos)', points: 0 },
+            { text: '6. Sustancias tóxicas (A_ Sustancias tóxicas (venenosas))', points: 0 },
+            { text: '6. Sustancias tóxicas (B_ Sustancias infecciosas)', points: 0 },
+            { text: '7. Radiactivos (A_ Categoria 1)', points: 0 },
+            { text: '7. Radiactivos (B_ Categoria 2)', points: 0 },
+            { text: '7. Radiactivos (C_ Categoria 3)', points: 0 },
+            { text: '8. Corrosivo', points: 0 },
+            { text: '9. Sustancias de peligrosidad diversa (Misceláneos)', points: 0 }
+        ]
+    },
+    {
+        category: 'Operación y Flota',
         text: 'Kilómetros promedio mensuales por unidad:',
         options: [
             { text: 'Menos de 8.000 km', points: 1 },
@@ -289,8 +314,7 @@ function renderQuestion() {
     // Actualizar progreso
     document.getElementById('question-count').innerText = `Pregunta ${state.currentQuestionIndex + 1} de ${totalQuestions}`;
 
-    // Actualizar categoría y texto si existiera un elemento para categoría
-    // Por ahora usamos el h2 existente para el texto
+    // Actualizar categoría y texto
     document.getElementById('question-text').innerHTML = `
         <span class="category-label">
             ${question.category}
@@ -302,13 +326,46 @@ function renderQuestion() {
     const optionsContainer = document.getElementById('quiz-options');
     optionsContainer.innerHTML = '';
 
-    question.options.forEach((option, index) => {
-        const button = document.createElement('button');
-        button.className = 'quiz-option';
-        button.innerText = option.text;
-        button.onclick = () => handleAnswer(option.points, index + 1); // Pasamos el número de respuesta (1, 2, 3)
-        optionsContainer.appendChild(button);
-    });
+    if (question.multiSelect) {
+        // Renderizar checkboxes para selección múltiple
+        optionsContainer.classList.remove('quiz-grid');
+        optionsContainer.classList.add('quiz-checkbox-group');
+
+        question.options.forEach((option, index) => {
+            const label = document.createElement('label');
+            label.className = 'quiz-checkbox-item';
+            label.innerHTML = `
+                <input type="checkbox" name="dg_option" value="${index + 1}">
+                <span class="quiz-checkbox-label">${option.text}</span>
+            `;
+            optionsContainer.appendChild(label);
+        });
+
+        // Botón para continuar
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'btn btn-primary';
+        nextBtn.style.marginTop = '1.5rem';
+        nextBtn.style.width = '100%';
+        nextBtn.innerText = 'Siguiente';
+        nextBtn.onclick = () => {
+            // Guardamos las respuestas múltiples (aunque valgan 0 puntos)
+            const selected = Array.from(document.querySelectorAll('input[name="dg_option"]:checked')).map(cb => cb.value);
+            handleAnswer(0, selected.join(',')); 
+        };
+        optionsContainer.appendChild(nextBtn);
+    } else {
+        // Renderizar botones normales
+        optionsContainer.classList.remove('quiz-checkbox-group');
+        optionsContainer.classList.add('quiz-grid');
+
+        question.options.forEach((option, index) => {
+            const button = document.createElement('button');
+            button.className = 'quiz-option';
+            button.innerText = option.text;
+            button.onclick = () => handleAnswer(option.points, index + 1);
+            optionsContainer.appendChild(button);
+        });
+    }
 }
 
 /**
@@ -318,6 +375,21 @@ function handleAnswer(points, optionNumber) {
     state.totalPoints += points;
     state.answers.push({ points, optionNumber });
 
+    // Lógica de salto condicional para Pregunta 2 (index 1)
+    if (state.currentQuestionIndex === 1) {
+        if (optionNumber === 3) {
+            // Si es "Mercancías peligrosas", va a la nueva pregunta 3 (index 2)
+            state.currentQuestionIndex = 2;
+        } else {
+            // Si es opción 1 o 2, salta a la pregunta 4 (que ahora es index 3)
+            state.currentQuestionIndex = 3;
+        }
+        renderQuestion();
+        return;
+    }
+
+    // El formulario de auth aparece después de un par de bloques
+    // Ajustado para que aparezca después de la pregunta de Kilómetros (index 3)
     if (state.currentQuestionIndex === 3 && !state.leads.email && !state.skippedAuth) {
         showSection('auth');
         return;

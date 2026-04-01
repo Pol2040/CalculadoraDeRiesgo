@@ -533,4 +533,43 @@ main {
         gap: 1rem;
         font-size: 0.8rem;
     }
-}
+}
+
+/* Estilos para preguntas de selección múltiple */
+.quiz-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    text-align: left;
+}
+
+.quiz-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-checkbox-item:hover {
+    background: rgba(99, 102, 241, 0.05);
+    border-color: var(--primary);
+}
+
+.quiz-checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.quiz-checkbox-label {
+    flex: 1;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: var(--fw-medium);
+}
