@@ -37,25 +37,16 @@ const QUESTIONS = [
         category: 'Operación y Flota',
         text: 'Determine sus "Mercancías peligrosas"',
         multiSelect: true,
-        options: [
-            { text: '1. Explosivos (A_ pueden generar proyección de masa)', points: 0 },
-            { text: '1. Explosivos (B_ no pueden generar proyección de masa)', points: 0 },
-            { text: '2. Gases (A_ Gases no inflamables, no tóxicos)', points: 0 },
-            { text: '2. Gases (B_ Gases inflamables)', points: 0 },
-            { text: '2. Gases (C_ Gases tóxicos)', points: 0 },
-            { text: '3. Líquidos Inflamables', points: 0 },
-            { text: '4. Clase 4 (A_ Sólidos inflamables)', points: 0 },
-            { text: '4. Clase 4 (B_ Sustancias que experimentan combustion espontánea)', points: 0 },
-            { text: '4. Clase 4 (C_ Sustancias que reaccionan con el agua emitiendo gases inflamables)', points: 0 },
-            { text: '5. Comburentes, peróxidos orgánicos (A_ Sustancias oxidantes)', points: 0 },
-            { text: '5. Comburentes, peróxidos orgánicos (B_ Peróxidos orgánicos)', points: 0 },
-            { text: '6. Sustancias tóxicas (A_ Sustancias tóxicas (venenosas))', points: 0 },
-            { text: '6. Sustancias tóxicas (B_ Sustancias infecciosas)', points: 0 },
-            { text: '7. Radiactivos (A_ Categoria 1)', points: 0 },
-            { text: '7. Radiactivos (B_ Categoria 2)', points: 0 },
-            { text: '7. Radiactivos (C_ Categoria 3)', points: 0 },
-            { text: '8. Corrosivo', points: 0 },
-            { text: '9. Sustancias de peligrosidad diversa (Misceláneos)', points: 0 }
+        groupedOptions: [
+            { title: 'Explosivos', items: ['pueden generar proyección de masa', 'no pueden generar proyección de masa'] },
+            { title: 'Gases', items: ['Gases no inflamables, no tóxicos', 'Gases inflamables', 'Gases tóxicos'] },
+            { text: 'Líquidos Inflamables' },
+            { title: 'Clase 4', items: ['Sólidos inflamables', 'Sustancias que experimentan combustion espontánea', 'Sustancias que reaccionan con el agua emitiendo gases inflamables'] },
+            { title: 'Comburentes, peróxidos orgánicos', items: ['Sustancias oxidantes', 'Peróxidos orgánicos'] },
+            { title: 'Sustancias tóxicas', items: ['Sustancias tóxicas (venenosas)', 'Sustancias infecciosas'] },
+            { title: 'Radiactivos', items: ['Categoria 1', 'Categoria 2', 'Categoria 3'] },
+            { text: 'Corrosivo' },
+            { text: 'Sustancias de peligrosidad diversa (Misceláneos)' }
         ]
     },
     {
@@ -331,26 +322,49 @@ function renderQuestion() {
         optionsContainer.classList.remove('quiz-grid');
         optionsContainer.classList.add('quiz-checkbox-group');
 
-        question.options.forEach((option, index) => {
-            const label = document.createElement('label');
-            label.className = 'quiz-checkbox-item';
-            label.innerHTML = `
-                <input type="checkbox" name="dg_option" value="${index + 1}">
-                <span class="quiz-checkbox-label">${option.text}</span>
-            `;
-            optionsContainer.appendChild(label);
+        const optionsToRender = question.groupedOptions || question.options;
+
+        optionsToRender.forEach((option, index) => {
+            if (option.title) {
+                // Título del grupo (no seleccionable)
+                const titleElement = document.createElement('div');
+                titleElement.className = 'quiz-group-title';
+                titleElement.innerText = option.title;
+                optionsContainer.appendChild(titleElement);
+
+                // Opciones del grupo (seleccionables)
+                option.items.forEach((item, itemIndex) => {
+                    const label = document.createElement('label');
+                    label.className = 'quiz-checkbox-item';
+                    label.style.marginLeft = '1rem'; // Indentación para sub-opciones
+                    label.innerHTML = `
+                        <input type="checkbox" name="dg_option" value="${option.title}: ${item}">
+                        <span class="quiz-checkbox-label">${item}</span>
+                    `;
+                    optionsContainer.appendChild(label);
+                });
+            } else {
+                // Opción simple
+                const label = document.createElement('label');
+                label.className = 'quiz-checkbox-item';
+                label.innerHTML = `
+                    <input type="checkbox" name="dg_option" value="${option.text}">
+                    <span class="quiz-checkbox-label">${option.text}</span>
+                `;
+                optionsContainer.appendChild(label);
+            }
         });
 
         // Botón para continuar
         const nextBtn = document.createElement('button');
         nextBtn.className = 'btn btn-primary';
-        nextBtn.style.marginTop = '1.5rem';
+        nextBtn.style.marginTop = '2rem';
         nextBtn.style.width = '100%';
         nextBtn.innerText = 'Siguiente';
         nextBtn.onclick = () => {
-            // Guardamos las respuestas múltiples (aunque valgan 0 puntos)
+            // Guardamos las respuestas múltiples
             const selected = Array.from(document.querySelectorAll('input[name="dg_option"]:checked')).map(cb => cb.value);
-            handleAnswer(0, selected.join(',')); 
+            handleAnswer(0, selected.join(', '));
         };
         optionsContainer.appendChild(nextBtn);
     } else {
@@ -410,7 +424,7 @@ function showResults() {
     const score = state.totalPoints;
     const percentile = ((score - 4) / (68 - 4)) * 100;
     let benchmarkText = '';
-    
+
     if (percentile <= 20) benchmarkText = 'Operación con controles sólidos';
     else if (percentile <= 40) benchmarkText = 'Riesgo moderado';
     else if (percentile <= 60) benchmarkText = 'Nivel promedio del sector';
