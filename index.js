@@ -336,10 +336,10 @@ function renderQuestion() {
                 option.items.forEach((item, itemIndex) => {
                     const label = document.createElement('label');
                     label.className = 'quiz-checkbox-item';
-                    label.style.paddingLeft = '3.5rem'; // Indentación interna para sub-opciones
+                    // El padding-left será el mismo que el base para alinear los checkboxes
                     label.innerHTML = `
                         <input type="checkbox" name="dg_option" value="${option.title}: ${item}">
-                        <span class="quiz-checkbox-label">${item}</span>
+                        <span class="quiz-checkbox-label" style="margin-left: 1.5rem;">${item}</span>
                     `;
                     optionsContainer.appendChild(label);
                 });
