@@ -423,6 +423,10 @@ function handleAnswer(points, optionNumber) {
 function showResults() {
     const score = state.totalPoints;
     const percentile = ((score - 4) / (68 - 4)) * 100;
+
+    const isDangerousGoods = state.answers[1]?.optionNumber === 3;
+    const dgTextGmail = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.\n\n' : '';
+    const dgTextHTML = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.<br><br>' : '';
     let benchmarkText = '';
 
     if (percentile <= 20) benchmarkText = 'Operación con controles sólidos';
@@ -473,7 +477,7 @@ Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas 
 
 Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.
 
-Factores Críticos Detectados
+${dgTextGmail}Factores Críticos Detectados
 - Buenas prácticas operativas instaladas
 - Conductores con experiencia
 - Baja siniestralidad
@@ -529,7 +533,7 @@ Nivel de riesgo: ${benchmarkText}
 Benchmark: Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.
 Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.
 
-Factores Críticos Detectados
+${dgTextGmail}Factores Críticos Detectados
 - Inconsistencias en la gestión operativa
 - Falta de seguimiento sistemático
 - Capacitación no sostenida
@@ -587,7 +591,7 @@ Nivel de riesgo: ${benchmarkText}
 Benchmark: Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.
 Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.
 
-Factores Críticos Detectados
+${dgTextGmail}Factores Críticos Detectados
 - Exposición operativa crítica
 - Conductores con baja experiencia o alta rotación
 - Hábitos de riesgo frecuentes
@@ -645,7 +649,7 @@ Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas 
 
 Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>
 
-<strong>Factores Críticos Detectados</strong><br>
+${dgTextHTML}<strong>Factores Críticos Detectados</strong><br>
 - Buenas prácticas operativas instaladas<br>
 - Conductores con experiencia<br>
 - Baja siniestralidad<br>
@@ -685,7 +689,7 @@ Nivel de riesgo: ${benchmarkText}<br>
 Benchmark: Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>
 Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>
 
-<strong>Factores Críticos Detectados</strong><br>
+${dgTextHTML}<strong>Factores Críticos Detectados</strong><br>
 - Inconsistencias en la gestión operativa<br>
 - Falta de seguimiento sistemático<br>
 - Capacitación no sostenida<br>
@@ -727,7 +731,7 @@ Nivel de riesgo: ${benchmarkText}<br>
 Benchmark: Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>
 Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>
 
-<strong>Factores Críticos Detectados</strong><br>
+${dgTextHTML}<strong>Factores Críticos Detectados</strong><br>
 - Exposición operativa crítica<br>
 - Conductores con baja experiencia o alta rotación<br>
 - Hábitos de riesgo frecuentes<br>
