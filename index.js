@@ -350,7 +350,7 @@ function showResults() {
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
-        // Contenido original (para Email Automático y PDF)
+        // Contenido original restaurado (solo para Email Automático)
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
@@ -364,34 +364,39 @@ Perito Auxiliar en Seguridad Vial y Accidentología.
 LEX Recursos Humanos
 https://bio.site/LEXRRHH`;
 
-        // Contenido de Word (solo para el botón "Enviar por Gmail")
-        gmailButtonBody = `Informe Ejecutivo
-Diagnóstico de Riesgo Operativo en Conducción Profesional
-
-Empresa: ${state.leads.company || ''}  Fecha: ${new Date().toLocaleDateString()}
+        // Contenido según imagen (para el botón manual de Gmail y PDF)
+        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},
+Gracias por completar el diagnóstico de riesgo operativo.
 
 Nivel de Riesgo Detectado
-RIESGO BAJO
+Resultado: RIESGO BAJO
+Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.
 
-La operación presenta un bajo nivel de exposición al riesgo. Existen buenas prácticas instaladas, con oportunidades de mejora preventiva para sostener los resultados en el tiempo.
-Principales Riesgos Identificados
-Hábitos de conducción no alineados con los objetivos del negocio.
-Falta de seguimiento posterior a las capacitaciones.
-Costos indirectos no registrados.
-Exposición legal subestimada.
+Score: ${score} puntos
+Nivel de riesgo: Bajo
+Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.
 
+Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.
+
+Factores Críticos Detectados
+- Buenas prácticas operativas instaladas
+- Conductores con experiencia
+- Baja siniestralidad
+- Control operativo adecuado
+Impacto Operativo
+- Riesgos residuales no detectados
+- Dependencia de prácticas informales
+- Vulnerabilidad ante cambios operativos
 Recomendaciones Iniciales
-Implementar un enfoque preventivo y medible.
-Alinear la conducción con los objetivos del negocio.
-Incorporar seguimiento y evaluación continua.
-Trabajar sobre hábitos reales, no solo contenidos teóricos.
+- Formalizar sistema de gestión
+- Estandarizar buenas prácticas
+- Mantener capacitación continua
+- Auditar periódicamente la operación
+Conclusión
+El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.
 
-Saludos cordiales,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-https://bio.site/LEXRRHH
+Sergio De Rosa.Instructor en Seguridad Vial.Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.Perito Auxiliar en Seguridad Vial y Accidentología.
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -521,7 +526,21 @@ Documento confidencial - Uso exclusivo de la empresa`;
     // Preparar contenido para el PDF (oculto en pantalla)
     const pdfOutput = document.getElementById('pdf-content');
     if (pdfOutput) {
-        pdfOutput.innerText = emailBody; // Usamos el mismo cuerpo extenso para el PDF
+        if (riskType === 'RIESGO BAJO') {
+            // Aplicar formato especial para Riesgo Bajo según la imagen
+            pdfOutput.innerHTML = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>
+Gracias por completar el diagnóstico de riesgo operativo.<br><br>
+<br>
+<strong>Nivel de Riesgo Detectado</strong><br>
+Resultado: <strong style="color: #10b981;">RIESGO BAJO</strong><br>
+Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br>
+Score: ${score} puntos<br>
+Nivel de riesgo: Bajo<br>
+Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>
+Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.`;
+        } else {
+            pdfOutput.innerText = emailBody; // Para otros niveles mantenemos el formato original por ahora
+        }
 
         // Cargar datos del lead en el encabezado del PDF
         document.getElementById('pdf-user-name').innerText = state.leads.name;
