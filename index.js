@@ -350,19 +350,15 @@ function showResults() {
         screenText = 'La operación presenta buenas prácticas instaladas. Existen oportunidades de mejora preventiva para sostener los resultados en el tiempo.';
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
-        // Contenido original restaurado (solo para Email Automático)
+        // Contenido solo para Email Automático
         emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
 Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
 Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
 Quedo a disposición.
 Saludos cordiales,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos
-https://bio.site/LEXRRHH`;
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
 
         // Contenido según imagen (para el botón manual de Gmail y PDF)
         gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},
@@ -395,7 +391,7 @@ Recomendaciones Iniciales
 Conclusión
 El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.
 
-Sergio De Rosa.Instructor en Seguridad Vial.Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.Perito Auxiliar en Seguridad Vial y Accidentología.
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
 LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
@@ -414,13 +410,12 @@ Gracias por completar el diagnóstico.
 Según la información proporcionada, su operación presenta un NIVEL DE RIESGO MEDIO.
 Este nivel indica que existen prácticas y hábitos que podrían derivar en siniestros evitables o sobrecostos si no se intervienen de forma preventiva.
 Quedo atento.
+
 Saludos,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos
-https://bio.site/LEXRRHH`;
+
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
 
         // Contenido de Word
         gmailButtonBody = `Informe Ejecutivo
@@ -446,11 +441,8 @@ Incorporar seguimiento y evaluación continua.
 Trabajar sobre hábitos reales, no solo contenidos teóricos.
 
 Saludos cordiales,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-https://bio.site/LEXRRHH
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -468,12 +460,8 @@ Gracias por completar la evaluación.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO, lo que implica una exposición significativa en términos operativos, económicos y legales.
 Quedo a disposición.
 Saludos cordiales,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-LEX Recursos Humanos
-https://bio.site/LEXRRHH`;
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
 
         // Contenido de Word
         gmailButtonBody = `Informe Ejecutivo
@@ -498,11 +486,8 @@ Incorporar seguimiento y evaluación continua.
 Trabajar sobre hábitos reales, no solo contenidos teóricos.
 
 Saludos cordiales,
-Sergio De Rosa.
-Instructor en Seguridad Vial.
-Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP.
-Perito Auxiliar en Seguridad Vial y Accidentología.
-https://bio.site/LEXRRHH
+Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH
 
 Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.
 
@@ -530,16 +515,46 @@ Documento confidencial - Uso exclusivo de la empresa`;
             // Aplicar formato especial para Riesgo Bajo según la imagen
             pdfOutput.innerHTML = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>
 Gracias por completar el diagnóstico de riesgo operativo.<br><br>
-<br>
+
 <strong>Nivel de Riesgo Detectado</strong><br>
 Resultado: <strong style="color: #10b981;">RIESGO BAJO</strong><br>
 Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br>
+
 Score: ${score} puntos<br>
 Nivel de riesgo: Bajo<br>
 Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>
-Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.`;
+
+Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>
+
+<strong>Factores Críticos Detectados</strong><br>
+- Buenas prácticas operativas instaladas<br>
+- Conductores con experiencia<br>
+- Baja siniestralidad<br>
+- Control operativo adecuado<br><br>
+
+<strong>Impacto Operativo</strong><br>
+- Riesgos residuales no detectados<br>
+- Dependencia de prácticas informales<br>
+- Vulnerabilidad ante cambios operativos<br><br>
+
+<strong>Recomendaciones Iniciales</strong><br>
+- Formalizar sistema de gestión<br>
+- Estandarizar buenas prácticas<br>
+- Mantener capacitación continua<br>
+- Auditar periódicamente la operación<br><br>
+
+<strong>Conclusión</strong><br>
+El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br>
+
+<strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
+<strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br>
+
+<em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br>
+
+<small>Documento confidencial - Uso exclusivo de la empresa</small>`;
         } else {
-            pdfOutput.innerText = emailBody; // Para otros niveles mantenemos el formato original por ahora
+            // Para otros niveles usamos el Informe Ejecutivo (Word) con Saltos de Línea
+            pdfOutput.innerHTML = gmailButtonBody.replace(/\n/g, '<br>');
         }
 
         // Cargar datos del lead en el encabezado del PDF
