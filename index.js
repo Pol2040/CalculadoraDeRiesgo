@@ -336,6 +336,16 @@ function handleAnswer(points, optionNumber) {
  */
 function showResults() {
     const score = state.totalPoints;
+    const percentile = ((score - 4) / (68 - 4)) * 100;
+    let benchmarkText = '';
+    
+    if (percentile <= 20) benchmarkText = 'Operación con controles sólidos';
+    else if (percentile <= 40) benchmarkText = 'Riesgo moderado';
+    else if (percentile <= 60) benchmarkText = 'Nivel promedio del sector';
+    else if (percentile <= 80) benchmarkText = 'Riesgo elevado';
+    else if (percentile <= 95) benchmarkText = 'Riesgo crítico';
+    else benchmarkText = 'Exposición extrema';
+
     let riskType = '';
     let screenText = '';
     let emailBody = '';
@@ -356,8 +366,11 @@ Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
 Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
 Quedo a disposición.
+
 Saludos cordiales,
+
 Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+
 LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
 
         // Contenido según imagen (para el botón manual de Gmail y PDF)
@@ -369,7 +382,7 @@ Resultado: RIESGO BAJO
 Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.
 
 Score: ${score} puntos
-Nivel de riesgo: Bajo
+Nivel de riesgo: ${benchmarkText}
 Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.
 
 Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.
@@ -426,7 +439,7 @@ Resultado: RIESGO MEDIO
 Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.
 
 Score: ${score} puntos
-Nivel de riesgo: Alto (Solo a modo de ejemplo)
+Nivel de riesgo: ${benchmarkText}
 Benchmark: Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.
 Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.
 
@@ -468,8 +481,11 @@ Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
 Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO.
 Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.
 Quedo a disposición para una reunión de análisis prioritaria.
+
 Saludos cordiales,
+
 Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
+
 LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
 
         // Contenido según información proporcionada (para el botón manual de Gmail y PDF)
@@ -481,7 +497,7 @@ Resultado: RIESGO ALTO
 Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.
 
 Score: ${score} puntos
-Nivel de riesgo: Alto
+Nivel de riesgo: ${benchmarkText}
 Benchmark: Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.
 Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.
 
@@ -538,7 +554,7 @@ Resultado: <strong style="color: #10b981;">RIESGO BAJO</strong><br>
 Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br>
 
 Score: ${score} puntos<br>
-Nivel de riesgo: Bajo<br>
+Nivel de riesgo: ${benchmarkText}<br>
 Benchmark: Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>
 
 Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>
@@ -579,7 +595,7 @@ Resultado: <strong style="color: #f59e0b;">RIESGO MEDIO</strong><br>
 Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>
 
 Score: ${score} puntos<br>
-Nivel de riesgo: Alto (Solo a modo de ejemplo)<br>
+Nivel de riesgo: ${benchmarkText}<br>
 Benchmark: Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>
 Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>
 
@@ -621,7 +637,7 @@ Resultado: <strong style="color: #ef4444;">RIESGO ALTO</strong><br>
 Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>
 
 Score: ${score} puntos<br>
-Nivel de riesgo: Alto<br>
+Nivel de riesgo: ${benchmarkText}<br>
 Benchmark: Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>
 Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>
 

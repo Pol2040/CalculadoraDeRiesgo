@@ -35,6 +35,8 @@
             <div class="logo">LEX Calculadora de riesgos</div>
         </div>
         <nav class="nav-links">
+            <a href="#" onclick="showSection('hero'); return false;">Inicio</a>
+            <a href="#" onclick="showSection('faq'); return false;">Preguntas frecuentes</a>
         </nav>
         <div class="auth-buttons" style="flex-direction: row; align-items: center; gap: 1.5rem;">
             <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Cambiar modo claro/oscuro">
@@ -173,6 +175,41 @@
                 <pre id="pdf-content" style="white-space: pre-wrap; font-family: 'Open Sans', sans-serif; font-size: 12pt; line-height: 1.5; color: #000; background: transparent; border: none; padding: 0;">
                     <!-- Cargado dinámicamente -->
                 </pre>
+            </div>
+        </section>
+        <!-- FAQ Section -->
+        <section id="faq-section" class="section">
+            <div class="container-center">
+                <div class="card" style="max-width: 800px; width: 100%;">
+                    <div style="text-align: center; margin-bottom: 3rem;">
+                        <span class="step-badge">FAQ</span>
+                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Preguntas frecuentes</h2>
+                        <p style="color: var(--text-muted);">Todo lo que necesita saber sobre nuestra Radiografía de Riesgo</p>
+                    </div>
+                    
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>¿Tiene costo?</h3>
+                            <p>No. El diagnóstico es sin cargo.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Es una auditoría?</h3>
+                            <p>No. Es una herramienta de análisis preventivo.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Cuánto tiempo lleva?</h3>
+                            <p>Entre 10 y 15 minutos.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Qué pasa después?</h3>
+                            <p>Usted decide. El informe no obliga a contratar ningún servicio.</p>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 3rem;">
+                        <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
