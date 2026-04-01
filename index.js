@@ -40,13 +40,13 @@ const QUESTIONS = [
         groupedOptions: [
             { title: 'Explosivos', items: ['pueden generar proyección de masa', 'no pueden generar proyección de masa'] },
             { title: 'Gases', items: ['Gases no inflamables, no tóxicos', 'Gases inflamables', 'Gases tóxicos'] },
-            { text: 'Líquidos Inflamables' },
+            { title: 'Líquidos Inflamables', items: ['Líquidos Inflamables'] },
             { title: 'Clase 4', items: ['Sólidos inflamables', 'Sustancias que experimentan combustion espontánea', 'Sustancias que reaccionan con el agua emitiendo gases inflamables'] },
             { title: 'Comburentes, peróxidos orgánicos', items: ['Sustancias oxidantes', 'Peróxidos orgánicos'] },
             { title: 'Sustancias tóxicas', items: ['Sustancias tóxicas (venenosas)', 'Sustancias infecciosas'] },
             { title: 'Radiactivos', items: ['Categoria 1', 'Categoria 2', 'Categoria 3'] },
-            { text: 'Corrosivo' },
-            { text: 'Sustancias de peligrosidad diversa (Misceláneos)' }
+            { title: 'Corrosivo', items: ['Sustancias Corrosivas'] },
+            { title: 'Misceláneos', items: ['Sustancias de peligrosidad diversa'] }
         ]
     },
     {
