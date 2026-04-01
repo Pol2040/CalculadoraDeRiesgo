@@ -549,7 +549,7 @@ main {
     gap: 1rem;
     background: var(--bg-body);
     border: 1px solid var(--border);
-    padding: 1rem;
+    padding: 1.5rem;
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -572,4 +572,14 @@ main {
     cursor: pointer;
     font-size: 1rem;
     font-weight: var(--fw-medium);
+}
+
+.quiz-group-title {
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: var(--fw-bold);
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding-left: 0.5rem;
+    border-left: 4px solid var(--primary);
 }
