@@ -460,58 +460,10 @@ function showResults() {
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
-Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
-Según sus respuestas, su operación presenta un NIVEL DE RIESGO BAJO.
-Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.
-Quedo a disposición.
-
-Saludos cordiales,
-
-Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
-
-LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #10b981;">NIVEL DE RIESGO BAJO</strong>.<br><br>Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
 
         // Contenido según imagen (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>
-Gracias por completar el diagnóstico de riesgo operativo.<br><br>
-
-<strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>
-Resultado: <strong style="color: #10b981; font-size: 1.25rem;">RIESGO BAJO</strong><br>
-Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br>
-
-<strong>Score:</strong> ${score} puntos<br>
-<strong>Nivel de riesgo:</strong> ${benchmarkText}<br>
-<strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>
-
-Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>
-
-${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>
-- Buenas prácticas operativas instaladas<br>
-- Conductores con experiencia<br>
-- Baja siniestralidad<br>
-- Control operativo adecuado<br><br>
-
-<strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>
-- Riesgos residuales no detectados<br>
-- Dependencia de prácticas informales<br>
-- Vulnerabilidad ante cambios operativos<br><br>
-
-<strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>
-- Formalizar sistema de gestión<br>
-- Estandarizar buenas prácticas<br>
-- Mantener capacitación continua<br>
-- Auditar periódicamente la operación<br><br>
-
-<strong style="font-size: 1.15rem;">Conclusión</strong><br>
-El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br>
-
-<strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
-<strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br>
-
-<em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br>
-
-<small style="color: #666;">Documento confidencial - Uso exclusivo de la empresa</small>`;
+        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #10b981; font-size: 1.25rem;">RIESGO BAJO</strong><br>Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Buenas prácticas operativas instaladas<br>- Conductores con experiencia<br>- Baja siniestralidad<br>- Control operativo adecuado<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Riesgos residuales no detectados<br>- Dependencia de prácticas informales<br>- Vulnerabilidad ante cambios operativos<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Formalizar sistema de gestión<br>- Estandarizar buenas prácticas<br>- Mantener capacitación continua<br>- Auditar periódicamente la operación<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial - Uso exclusivo de la empresa</small>`;
 
     } else if (score <= 40) {
         riskType = 'RIESGO MEDIO';
@@ -520,59 +472,10 @@ El nivel de riesgo detectado refleja una operación con buen nivel de control. E
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
-Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
-Según sus respuestas, su operación presenta un NIVEL DE RIESGO MEDIO.
-Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.
-Quedo a disposición.
-
-Saludos cordiales,
-
-Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
-
-LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #f59e0b;">NIVEL DE RIESGO MEDIO</strong>.<br><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
 
         // Contenido según información proporcionada (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>
-Gracias por completar el diagnóstico de riesgo operativo.<br><br>
-
-<strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>
-Resultado: <strong style="color: #f59e0b; font-size: 1.25rem;">RIESGO MEDIO</strong><br>
-Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>
-
-<strong>Score:</strong> ${score} puntos<br>
-<strong>Nivel de riesgo:</strong> ${benchmarkText}<br>
-<strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>
-Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>
-
-${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>
-- Inconsistencias en la gestión operativa<br>
-- Falta de seguimiento sistemático<br>
-- Capacitación no sostenida<br>
-- Hábitos de riesgo moderados<br><br>
-
-<strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>
-- Incremento de siniestros evitables<br>
-- Aumento progresivo de costos<br>
-- Desviaciones normalizadas<br>
-- Exposición legal<br><br>
-
-<strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>
-- Estandarizar procesos<br>
-- Implementar seguimiento<br>
-- Reforzar capacitación<br>
-- Corregir hábitos<br>
-- Incorporar indicadores<br><br>
-
-<strong style="font-size: 1.15rem;">Conclusión</strong><br>
-El nivel de riesgo detectado representa una oportunidad concreta de mejora. La implementación de un sistema de gestión preventiva permitirá reducir siniestralidad y optimizar costos.<br><br>
-
-<strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
-<strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br>
-
-<em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br>
-
-<small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
+        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #f59e0b; font-size: 1.25rem;">RIESGO MEDIO</strong><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Inconsistencias en la gestión operativa<br>- Falta de seguimiento sistemático<br>- Capacitación no sostenida<br>- Hábitos de riesgo moderados<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Incremento de siniestros evitables<br>- Aumento progresivo de costos<br>- Desviaciones normalizadas<br>- Exposición legal<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Estandarizar procesos<br>- Implementar seguimiento<br>- Reforzar capacitación<br>- Corregir hábitos<br>- Incorporar indicadores<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado representa una oportunidad concreta de mejora. La implementación de un sistema de gestión preventiva permitirá reducir siniestralidad y optimizar costos.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
 
     } else {
         riskType = 'RIESGO ALTO';
@@ -581,58 +484,10 @@ El nivel de riesgo detectado representa una oportunidad concreta de mejora. La i
         emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''}
-Gracias por completar la Radiografía Ejecutiva de Riesgo Operativo.
-Según sus respuestas, su operación presenta un NIVEL DE RIESGO ALTO.
-Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.
-Quedo a disposición para una reunión de análisis prioritaria.
-
-Saludos cordiales,
-
-Sergio De Rosa. Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.
-
-LEX Recursos Humanos y Organización S.R.L. https://bio.site/LEXRRHH`;
+        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #ef4444;">NIVEL DE RIESGO ALTO</strong>.<br><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>Quedo a disposición para una reunión de análisis prioritaria.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
 
         // Contenido según información proporcionada (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>
-Gracias por completar el diagnóstico de riesgo operativo.<br><br>
-
-<strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>
-Resultado: <strong style="color: #ef4444; font-size: 1.25rem;">RIESGO ALTO</strong><br>
-Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>
-
-<strong>Score:</strong> ${score} puntos<br>
-<strong>Nivel de riesgo:</strong> ${benchmarkText}<br>
-<strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>
-Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>
-
-${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>
-- Exposición operativa crítica<br>
-- Conductores con baja experiencia o alta rotación<br>
-- Hábitos de riesgo frecuentes<br>
-- Ausencia de gestión preventiva<br><br>
-
-<strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>
-- Alta probabilidad de siniestros<br>
-- Incremento de costos operativos<br>
-- Exposición legal significativa<br>
-- Pérdida de control operativo<br><br>
-
-<strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>
-- Intervención inmediata en conductores<br>
-- Implementar sistema de gestión<br>
-- Definir protocolos obligatorios<br>
-- Medir costos y riesgos<br><br>
-
-<strong style="font-size: 1.15rem;">Conclusión</strong><br>
-El nivel de riesgo detectado requiere una intervención prioritaria. La implementación de un sistema estructurado de gestión es clave para recuperar el control operativo y reducir la exposición.<br><br>
-
-<strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br>
-<strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br>
-
-<em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br>
-
-<small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
+        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #ef4444; font-size: 1.25rem;">RIESGO ALTO</strong><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Exposición operativa crítica<br>- Conductores con baja experiencia o alta rotación<br>- Hábitos de riesgo frecuentes<br>- Ausencia de gestión preventiva<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Alta probabilidad de siniestros<br>- Incremento de costos operativos<br>- Exposición legal significativa<br>- Pérdida de control operativo<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Intervención inmediata en conductores<br>- Implementar sistema de gestión<br>- Definir protocolos obligatorios<br>- Medir costos y riesgos<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado requiere una intervención prioritaria. La implementación de un sistema estructurado de gestión es clave para recuperar el control operativo y reducir la exposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
     }
 
     // Guardar los cuerpos por separado
