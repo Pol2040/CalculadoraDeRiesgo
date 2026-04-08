@@ -678,6 +678,14 @@ El nivel de riesgo detectado requiere una intervención prioritaria. La implemen
     sendAutoEmail(riskType, emailSubject, emailBody);
 
     showSection('result');
+
+    // Mostrar la previsualización en pantalla para facilitar el copiado manual
+    const reportPreview = document.getElementById('report-preview');
+    const reportHtmlContent = document.getElementById('report-html-content');
+    if (reportPreview && reportHtmlContent) {
+        reportPreview.style.display = 'block';
+        reportHtmlContent.innerHTML = gmailButtonBody;
+    }
 }
 
 /**
@@ -884,4 +892,51 @@ function logout() {
 
     // Recargar para limpiar todo el estado limpiamente
     window.location.reload();
+}
+
+/**
+ * Copia el reporte en formato "Rich Text" (HTML renderizado) al portapapeles.
+ * Esto permite pegarlo en Gmail o Word manteniendo colores y tamaños.
+ */
+async function copyFormattedReport() {
+    const content = state.gmailButtonBody;
+    if (!content) return;
+
+    // Crear un contenedor temporal oculto para el HTML
+    const container = document.createElement('div');
+    container.innerHTML = content;
+    container.style.position = 'fixed';
+    container.style.pointerEvents = 'none';
+    container.style.opacity = '0';
+    document.body.appendChild(container);
+
+    try {
+        // Usamos la API de Clipboard moderna para copiar HTML real
+        const blob = new Blob([content], { type: 'text/html' });
+        const plainBlob = new Blob([container.innerText], { type: 'text/plain' });
+        const data = [new ClipboardItem({
+            'text/html': blob,
+            'text/plain': plainBlob
+        })];
+
+        await navigator.clipboard.write(data);
+        
+        const btn = event.target;
+        const originalText = btn.innerText;
+        btn.innerText = "¡Copiado con formato!";
+        btn.style.background = "#10b981";
+        btn.style.color = "white";
+        
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.background = "";
+            btn.style.color = "";
+        }, 3000);
+
+    } catch (err) {
+        console.error('Error al copiar:', err);
+        alert('No se pudo copiar el formato automáticamente. Por favor, selecciona el texto del reporte abajo y cópialo manualmente.');
+    } finally {
+        document.body.removeChild(container);
+    }
 }

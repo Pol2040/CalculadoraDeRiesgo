@@ -155,6 +155,12 @@
                     <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
                     <button class="btn btn-outline" onclick="window.print()">Descargar PDF</button>
                     <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button>
+                    <button class="btn btn-outline" onclick="copyFormattedReport()" style="border-color: #c5221f; color: #c5221f;">Copiar para Gmail Manual</button>
+                </div>
+
+                <!-- Previsualización del reporte en pantalla -->
+                <div id="report-preview" class="report-preview-container" style="margin-top: 3rem; text-align: left; padding: 2rem; border: 1px solid var(--border); border-radius: 12px; background: var(--card-bg); display: none;">
+                    <div id="report-html-content"></div>
                 </div>
             </div>
 
