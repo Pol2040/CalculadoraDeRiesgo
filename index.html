@@ -4,15 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Riesgo | Perfil de Inversión Inteligente</title>
+    <title>Calculadora de Riesgo | Transporte de carga</title>
     <meta name="description"
-        content="Descubre tu perfil de riesgo con nuestra calculadora avanzada. Toma decisiones financieras informadas hoy.">
+        content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
+
+    <!-- Meta etiquetas para vista previa en redes sociales (WhatsApp, Facebook, etc.) -->
+    <meta property="og:title" content="Calculadora de Riesgo | Transporte de carga">
+    <meta property="og:description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
+    <meta property="og:type" content="website">
 
     <!-- Ícono de la Pestaña (Favicon) -->
     <link rel="icon" href="lex_vector.svg" type="image/svg+xml">
     
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="index.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -20,7 +24,7 @@
     <script>
         // Inicialización inmediata del tema para evitar destellos
         (function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedTheme = localStorage.getItem('theme') || 'dark';
             document.documentElement.setAttribute('data-theme', savedTheme);
         })();
     </script>
@@ -30,25 +34,21 @@
     <div class="bg-mesh"></div>
 
     <header>
-        <div class="logo-container" style="display: flex; align-items: center; gap: 0.5rem;">
-            <img src="lex_vector.svg" alt="LEX Logo" style="height: 4.5rem; width: auto;">
-            <div class="logo">LEX Calculadora de riesgos</div>
+        <div class="header-logo-section">
+            <img src="lex_vector.svg" alt="LEX Logo">
+            <div class="header-divider"></div>
+            <div class="header-subtitle">Calculadora<br>de Riesgo Operativo</div>
         </div>
         <nav class="nav-links">
-            <a href="#" onclick="showSection('hero'); return false;">Inicio</a>
+            <a href="#" class="active" onclick="showSection('hero'); return false;">Inicio</a>
+            <a href="#" onclick="showSection('faq'); return false;">Cómo funciona</a>
+            <a href="#" onclick="showSection('faq'); return false;">Benchmark</a>
             <a href="#" onclick="showSection('faq'); return false;">Preguntas frecuentes</a>
         </nav>
-        <div class="auth-buttons" style="flex-direction: row; align-items: center; gap: 1.5rem;">
-            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" title="Cambiar modo claro/oscuro">
-                <svg class="sun-icon" viewBox="0 0 24 24">
-                    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 00-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"></path>
-                </svg>
-                <svg class="moon-icon" viewBox="0 0 24 24">
-                    <path d="M9.37 5.51c-.18-.64-.27-1.31-.27-1.99 0-.32.02-.63.06-.94C5.49 4.11 3 7.76 3 12c0 4.97 4.03 9 9 9 4.24 0 7.89-2.49 9.42-6.14-.31.04-.62.06-.94.06-6.63 0-12-5.37-12-12 0-.68.09-1.35.27-1.99z"></path>
-                </svg>
-            </button>
+        <div class="auth-buttons">
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" style="display: none;"></button>
             <div style="display: flex; flex-direction: column; align-items: center; min-width: 180px;">
-                <button id="header-start-btn" class="btn btn-primary" onclick="startQuiz()">Comenzar Radiografía</button>
+                <button id="header-start-btn" class="btn btn-primary" onclick="startQuiz()">Calcular mi riesgo →</button>
                 <a href="#" id="nav-register-btn" class="logout-link" onclick="showSection('auth'); return false;">Registrarse</a>
             </div>
         </div>
@@ -57,18 +57,128 @@
     <main id="app-content">
         <!-- Hero Section -->
         <section id="hero-section" class="section active">
-            <div class="hero">
-                <h1>Radiografía Ejecutiva de <span style="color: var(--secondary)">Riesgo Operativo en Transporte de Cargas</span></h1>
-                <p>Mida el riesgo antes de que impacte en sus costos. Identifique riesgos, sobrecostos y puntos críticos
-                    antes de que se transformen en un siniestro evitable.</p>
-                <button id="hero-start-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.2rem 2.5rem;"
-                    onclick="startQuiz()">Comenzar Radiografía</button>
-                <p
-                    style="font-size: 0.95rem; color: var(--text-muted); max-width: 700px; margin: 1.5rem auto 0; line-height: 1.5;">
-                    Diagnóstico confidencial, sin costo y sin compromiso. Resultado inmediato al finalizar. <br>
-                    Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se
-                    recomienda una reunión de análisis personalizada.
-                </p>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>¿Tu flota tiene un<br><span class="highlight-red">riesgo oculto?</span></h1>
+                    <div class="subtitle">
+                        Medí el factor que más impacta en tus costos:<br>
+                        <span class="highlight-blue">LA PERSONA DETRÁS DEL VOLANTE</span>
+                    </div>
+                    <p class="description">
+                        Detectá riesgos humanos, hábitos de conducción y puntos críticos antes de que se conviertan en accidentes, costos o unidades paradas.
+                    </p>
+                    
+                    <button id="hero-start-btn" class="btn btn-primary hero-cta-btn" onclick="startQuiz()">
+                        Comenzar diagnóstico gratis →
+                    </button>
+                    
+                    <div class="hero-info-row">
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <div>
+                                <span class="info-val">3 MINUTOS</span>
+                                <span class="info-label">para completarlo</span>
+                            </div>
+                        </div>
+                        <div class="hero-info-divider"></div>
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                            <div>
+                                <span class="info-val">RESULTADO</span>
+                                <span class="info-label">inmediato</span>
+                            </div>
+                        </div>
+                        <div class="hero-info-divider"></div>
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <div>
+                                <span class="info-val">CONFIDENCIAL</span>
+                                <span class="info-label">y sin compromiso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-image-container">
+                    <img src="camion_hero.jpg" alt="Camión de carga en la carretera en la noche">
+                    <div class="hero-image-overlay"></div>
+                </div>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="2" x2="12" y2="22"></line>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <circle cx="12" cy="12" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="feature-card-content">
+                        <h3>Hábitos de conducción</h3>
+                        <p>Conductas y decisiones que aumentan la exposición al riesgo en ruta.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="feature-card-content">
+                        <h3>Factores humanos</h3>
+                        <p>Fatiga, atención, estrés y comportamiento que impactan el desempeño.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            <polyline points="9 11 11 13 15 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="feature-card-content">
+                        <h3>Cultura de seguridad</h3>
+                        <p>Compromiso con normas, capacitación y percepción del riesgo.</p>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                            <path d="M3 20h18"></path>
+                            <polyline points="3 12 9 6 15 12 21 6"></polyline>
+                        </svg>
+                    </div>
+                    <div class="feature-card-content">
+                        <h3>Impacto operativo</h3>
+                        <p>Costos, siniestros, disponibilidad de unidades y productividad.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-footer-bar">
+                <div class="hero-footer-left">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <span>Herramienta utilizada por empresas de transporte que toman decisiones basadas en datos.</span>
+                </div>
+                <div class="hero-footer-right">
+                    Mejores decisiones. Menos riesgo. Más resultados.
+                </div>
             </div>
         </section>
 
@@ -154,7 +264,7 @@
                 <div style="display: flex; gap: 1rem; justify-content: center;" class="no-print">
                     <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
                     <button class="btn btn-outline" onclick="window.print()">Descargar PDF</button>
-                    <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button>
+                    <!-- <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button> -->
                 </div>
             </div>
 

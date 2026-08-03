@@ -37,16 +37,16 @@ const QUESTIONS = [
         category: 'Operación y Flota',
         text: 'Determine sus "Mercancías peligrosas"',
         multiSelect: true,
-        groupedOptions: [
-            { title: 'Explosivos', items: ['pueden generar proyección de masa', 'no pueden generar proyección de masa'] },
-            { title: 'Gases', items: ['Gases no inflamables, no tóxicos', 'Gases inflamables', 'Gases tóxicos'] },
-            { title: 'Líquidos Inflamables', items: ['Líquidos Inflamables'] },
-            { title: 'Clase 4', items: ['Sólidos inflamables', 'Sustancias que experimentan combustion espontánea', 'Sustancias que reaccionan con el agua emitiendo gases inflamables'] },
-            { title: 'Comburentes, peróxidos orgánicos', items: ['Sustancias oxidantes', 'Peróxidos orgánicos'] },
-            { title: 'Sustancias tóxicas', items: ['Sustancias tóxicas (venenosas)', 'Sustancias infecciosas'] },
-            { title: 'Radiactivos', items: ['Categoria 1', 'Categoria 2', 'Categoria 3'] },
-            { title: 'Corrosivo', items: ['Sustancias Corrosivas'] },
-            { title: 'Misceláneos', items: ['Sustancias de peligrosidad diversa'] }
+        options: [
+            { text: 'Explosivos', points: 0 },
+            { text: 'Gases', points: 0 },
+            { text: 'Líquidos Inflamables', points: 0 },
+            { text: 'Clase 4', points: 0 },
+            { text: 'Comburentes, peróxidos orgánicos', points: 0 },
+            { text: 'Sustancias tóxicas', points: 0 },
+            { text: 'Radiactivos (Categoria 1, 2 y 3)', points: 0 },
+            { text: 'Corrosivo', points: 0 },
+            { text: 'Sustancias de peligrosidad diversa (Misceláneos)', points: 0 }
         ]
     },
     {
@@ -182,6 +182,51 @@ const state = {
 };
 
 /**
+ * Funciones de Cooldown (Ban temporal por 1 hora)
+ */
+const WHITELIST_EMAILS = [
+    'poloocuello@gmail.com',
+    'sergiogustavoderosa@yahoo.com.ar',
+    'aohrnialian@gmail.com'
+];
+
+function isEmailBanned(email) {
+    if (!email) return false;
+
+    // Los correos en la lista blanca nunca son baneados
+    if (WHITELIST_EMAILS.includes(email.toLowerCase())) {
+        return false;
+    }
+
+    const banData = localStorage.getItem(`ban_${email}`);
+    if (!banData) return false;
+
+    const lastSubmission = parseInt(banData, 10);
+    const now = Date.now();
+    const oneHour = 60 * 60 * 1000;
+
+    if (now - lastSubmission < oneHour) {
+        const remainingMinutes = Math.ceil((oneHour - (now - lastSubmission)) / (60 * 1000));
+        return remainingMinutes;
+    }
+
+    // Si ya pasó más de una hora, limpiamos el registro
+    localStorage.removeItem(`ban_${email}`);
+    return false;
+}
+
+function banEmail(email) {
+    if (!email) return;
+
+    // No banear si está en la lista blanca
+    if (WHITELIST_EMAILS.includes(email.toLowerCase())) {
+        return;
+    }
+
+    localStorage.setItem(`ban_${email}`, Date.now().toString());
+}
+
+/**
  * Maneja la navegación entre secciones
  */
 function showSection(sectionName) {
@@ -206,8 +251,15 @@ function handleAuth(event) {
         role: document.getElementById('user-role').value,
         company: document.getElementById('user-company').value,
         fleetSize: document.getElementById('user-fleet-size').value,
-        email: document.getElementById('user-email').value
+        email: document.getElementById('user-email').value.trim().toLowerCase()
     };
+
+    // Verificar si el email está en periodo de espera
+    const waitingTime = isEmailBanned(userData.email);
+    if (waitingTime) {
+        alert(`Este correo electrónico ya ha completado una evaluación recientemente. Por seguridad y para garantizar la precisión de los resultados, debe esperar ${waitingTime} minutos antes de realizar una nueva radiografía.\n\nSi necesita asistencia inmediata, por favor contacte a LEX Recursos Humanos.`);
+        return;
+    }
 
     state.leads = userData;
 
@@ -281,6 +333,16 @@ function skipAuth() {
  * Inicia el proceso del quiz
  */
 function startQuiz() {
+    // Verificar si el usuario ya está logueado y si tiene ban
+    if (state.leads.email) {
+        const waitingTime = isEmailBanned(state.leads.email);
+        if (waitingTime) {
+            alert(`Ya has completado una evaluación recientemente. Debes esperar ${waitingTime} minutos para realizar una nueva radiografía.\n\nTe recomendamos analizar los resultados obtenidos o contactarnos para una reunión personalizada.`);
+            showSection('hero');
+            return;
+        }
+    }
+
     state.currentQuestionIndex = 0;
     state.totalPoints = 0;
     state.answers = [];
@@ -367,8 +429,10 @@ function renderQuestion() {
         // Botón para continuar
         const nextBtn = document.createElement('button');
         nextBtn.className = 'btn btn-primary';
-        nextBtn.style.marginTop = '2rem';
-        nextBtn.style.width = '100%';
+        nextBtn.style.width = 'fit-content';
+        nextBtn.style.display = 'block';
+        nextBtn.style.margin = '2rem auto 0';
+        nextBtn.style.paddingInline = '3rem';
         nextBtn.innerText = 'Siguiente';
         nextBtn.onclick = () => {
             // Guardamos las respuestas múltiples
@@ -434,7 +498,7 @@ function showResults() {
     const percentile = ((score - 4) / (68 - 4)) * 100;
 
     const isDangerousGoods = state.answers[1]?.optionNumber === 3;
-    const dgTextGmail = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.\n\n' : '';
+    // const dgTextGmail = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.\n\n' : '';
     const dgTextHTML = isDangerousGoods ? 'El transporte de mercancías peligrosas implica riesgos específicos que pueden afectar la salud de las personas, el medio ambiente y los bienes materiales, así como también generar consecuencias directas sobre su propia operación. En este contexto, hemos desarrollado un programa de gestión de riesgos especialmente diseñado para este tipo de actividad, orientado a reducir de manera significativa la probabilidad de incidentes y sus posibles impactos.<br><br>' : '';
     let benchmarkText = '';
 
@@ -460,10 +524,10 @@ function showResults() {
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #10b981;">NIVEL DE RIESGO BAJO</strong>.<br><br>Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
+        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #10b981;">NIVEL DE RIESGO BAJO</strong>.<br><br>Esto indica que existen buenas prácticas instaladas y un control operativo adecuado. Sin embargo, incluso en escenarios favorables, la experiencia demuestra que la prevención continua es clave para sostener estos resultados en el tiempo.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
 
-        // Contenido según imagen (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #10b981; font-size: 1.25rem;">RIESGO BAJO</strong><br>Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Buenas prácticas operativas instaladas<br>- Conductores con experiencia<br>- Baja siniestralidad<br>- Control operativo adecuado<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Riesgos residuales no detectados<br>- Dependencia de prácticas informales<br>- Vulnerabilidad ante cambios operativos<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Formalizar sistema de gestión<br>- Estandarizar buenas prácticas<br>- Mantener capacitación continua<br>- Auditar periódicamente la operación<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial - Uso exclusivo de la empresa</small>`;
+        // Contenido según imagen (Mantenido para el informe PDF)
+        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #10b981; font-size: 20px;">RIESGO BAJO</strong><br>Este nivel indica la presencia de buenas prácticas operativas y un adecuado control de la operación, reduciendo significativamente la probabilidad de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo inferior al 90% de las flotas analizadas.<br><br>Esto indica que su operación se encuentra dentro de los niveles más bajos de riesgo del sector, con una base sólida de gestión operativa.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Buenas prácticas operativas instaladas<br>- Conductores con experiencia<br>- Baja siniestralidad<br>- Control operativo adecuado<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Riesgos residuales no detectados<br>- Dependencia de prácticas informales<br>- Vulnerabilidad ante cambios operativos<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Formalizar sistema de gestión<br>- Estandarizar buenas prácticas<br>- Mantener capacitación continua<br>- Auditar periódicamente la operación<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado refleja una operación con buen nivel de control. El desafío principal es sostener y sistematizar estas prácticas en el tiempo.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial - Uso exclusivo de la empresa</small></div>`;
 
     } else if (score <= 40) {
         riskType = 'RIESGO MEDIO';
@@ -472,10 +536,10 @@ function showResults() {
         emailSubject = 'Resultado de su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #f59e0b;">NIVEL DE RIESGO MEDIO</strong>.<br><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
+        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #f59e0b;">NIVEL DE RIESGO MEDIO</strong>.<br><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br>Quedo a disposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
 
-        // Contenido según información proporcionada (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #f59e0b; font-size: 1.25rem;">RIESGO MEDIO</strong><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Inconsistencias en la gestión operativa<br>- Falta de seguimiento sistemático<br>- Capacitación no sostenida<br>- Hábitos de riesgo moderados<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Incremento de siniestros evitables<br>- Aumento progresivo de costos<br>- Desviaciones normalizadas<br>- Exposición legal<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Estandarizar procesos<br>- Implementar seguimiento<br>- Reforzar capacitación<br>- Corregir hábitos<br>- Incorporar indicadores<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado representa una oportunidad concreta de mejora. La implementación de un sistema de gestión preventiva permitirá reducir siniestralidad y optimizar costos.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
+        // Contenido según información proporcionada (Mantenido para el informe PDF)
+        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #f59e0b; font-size: 20px;">RIESGO MEDIO</strong><br>Este nivel indica la presencia de prácticas y desvíos operativos que podrían derivar en siniestros evitables y sobrecostos si no se gestionan de forma preventiva.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 65% de las flotas analizadas.<br>Esto indica que su operación presenta un nivel de riesgo similar al de la mayoría de las flotas analizadas, pero con oportunidades claras de mejora para reducir exposición y costos.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Inconsistencias en la gestión operativa<br>- Falta de seguimiento sistemático<br>- Capacitación no sostenida<br>- Hábitos de riesgo moderados<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Incremento de siniestros evitables<br>- Aumento progresivo de costos<br>- Desviaciones normalizadas<br>- Exposición legal<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Estandarizar procesos<br>- Implementar seguimiento<br>- Reforzar capacitación<br>- Corregir hábitos<br>- Incorporar indicadores<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado representa una oportunidad concreta de mejora. La implementación de un sistema de gestión preventiva permitirá reducir siniestralidad y optimizar costos.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small></div>`;
 
     } else {
         riskType = 'RIESGO ALTO';
@@ -484,16 +548,16 @@ function showResults() {
         emailSubject = 'Recomendación tras su Evaluación de Riesgo Operativo';
 
         // Contenido solo para Email Automático
-        emailBody = `Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #ef4444;">NIVEL DE RIESGO ALTO</strong>.<br><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>Quedo a disposición para una reunión de análisis prioritaria.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a>`;
+        emailBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Hola${state.leads.name ? ', ' + state.leads.name : ''},<br><br>Gracias por completar la <strong>Radiografía Ejecutiva de Riesgo Operativo</strong>.<br><br>Según sus respuestas, su operación presenta un <strong style="color: #ef4444;">NIVEL DE RIESGO ALTO</strong>.<br><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br>Quedo a disposición para una reunión de análisis prioritaria.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a></div>`;
 
-        // Contenido según información proporcionada (para el botón manual de Gmail y PDF)
-        gmailButtonBody = `Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 1.25rem;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #ef4444; font-size: 1.25rem;">RIESGO ALTO</strong><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>${dgTextHTML}<strong style="font-size: 1.15rem;">Factores Críticos Detectados</strong><br>- Exposición operativa crítica<br>- Conductores con baja experiencia o alta rotación<br>- Hábitos de riesgo frecuentes<br>- Ausencia de gestión preventiva<br><br><strong style="font-size: 1.15rem;">Impacto Operativo</strong><br>- Alta probabilidad de siniestros<br>- Incremento de costos operativos<br>- Exposición legal significativa<br>- Pérdida de control operativo<br><br><strong style="font-size: 1.15rem;">Recomendaciones Iniciales</strong><br>- Intervención inmediata en conductores<br>- Implementar sistema de gestión<br>- Definir protocolos obligatorios<br>- Medir costos y riesgos<br><br><strong style="font-size: 1.15rem;">Conclusión</strong><br>El nivel de riesgo detectado requiere una intervención prioritaria. La implementación de un sistema estructurado de gestión es clave para recuperar el control operativo y reducir la exposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small>`;
+        // Contenido según información proporcionada (Mantenido para el informe PDF)
+        gmailButtonBody = `<div style="max-width: 600px; margin: 0 auto; font-family: Arial, sans-serif; line-height: 1.6;">Estimado${state.leads.name ? ' ' + state.leads.name : ''},<br>Gracias por completar el diagnóstico de riesgo operativo.<br><br><strong style="font-size: 20px;">Nivel de Riesgo Detectado</strong><br>Resultado: <strong style="color: #ef4444; font-size: 20px;">RIESGO ALTO</strong><br>Este nivel indica una exposición significativa en términos operativos, económicos y legales, con alta probabilidad de ocurrencia de siniestros.<br><br><strong>Score:</strong> ${score} puntos<br><strong>Nivel de riesgo:</strong> ${benchmarkText}<br><strong>Benchmark:</strong> Su empresa presenta un nivel de riesgo superior al 80% de las flotas analizadas.<br>Esto indica una posición crítica dentro del sector, con una exposición significativamente mayor al promedio.<br><br>${dgTextHTML}<strong style="font-size: 18px;">Factores Críticos Detectados</strong><br>- Exposición operativa crítica<br>- Conductores con baja experiencia o alta rotación<br>- Hábitos de riesgo frecuentes<br>- Ausencia de gestión preventiva<br><br><strong style="font-size: 18px;">Impacto Operativo</strong><br>- Alta probabilidad de siniestros<br>- Incremento de costos operativos<br>- Exposición legal significativa<br>- Pérdida de control operativo<br><br><strong style="font-size: 18px;">Recomendaciones Iniciales</strong><br>- Intervención inmediata en conductores<br>- Implementar sistema de gestión<br>- Definir protocolos obligatorios<br>- Medir costos y riesgos<br><br><strong style="font-size: 18px;">Conclusión</strong><br>El nivel de riesgo detectado requiere una intervención prioritaria. La implementación de un sistema estructurado de gestión es clave para recuperar el control operativo y reducir la exposición.<br><br><strong>Sergio De Rosa.</strong> Instructor en Seguridad Vial. Diplomado en el Transporte de Mercancías y Residuos Peligrosos por Carretera, IRAM-CATAMP. Perito Auxiliar en Seguridad Vial y Accidentología.<br><strong>LEX Recursos Humanos y Organización S.R.L.</strong> <a href="https://bio.site/LEXRRHH" target="_blank">https://bio.site/LEXRRHH</a><br><br><em>Este diagnóstico identifica riesgos, pero no los corrige. Para reducirlos de forma concreta, se recomienda una reunión de análisis personalizada.</em><br><br><small style="color: #666;">Documento confidencial – Uso exclusivo de la empresa</small></div>`;
     }
 
     // Guardar los cuerpos por separado
     state.currentEmailSubject = emailSubject;
     state.currentEmailBody = emailBody; // Original
-    state.gmailButtonBody = gmailButtonBody; // Word
+    // state.gmailButtonBody = gmailButtonBody; // Comentado (Gmail Manual)
 
     document.getElementById('risk-type').innerText = riskType;
     document.getElementById('risk-type').style.color = accentColor;
@@ -532,6 +596,11 @@ function showResults() {
     // Envío automático de email al terminar
     sendAutoEmail(riskType, emailSubject, emailBody);
 
+    // Aplicar ban por 1 hora para evitar re-intentos constantes
+    if (state.leads.email) {
+        banEmail(state.leads.email);
+    }
+
     showSection('result');
 }
 
@@ -565,6 +634,9 @@ async function saveToGoogleSheet(data) {
 /**
  * Envía los resultados por correo electrónico de forma automática usando EmailJS
  */
+/**
+ * [COMENTADO TEMPORALMENTE] Envía los resultados por correo electrónico de forma automática usando EmailJS
+ * 
 function sendEmail() {
     if (!state.leads.email) {
         alert("No se encontró un correo electrónico asociado.");
@@ -595,9 +667,9 @@ function sendEmail() {
     console.log('Parámetros enviados:', templateParams);
 
     // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
-    SERVICE_ID = 'service_iroclp9';
-    TEMPLATE_ID = 'template_dkpkqkf';
-    PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+    SERVICE_ID = 'service_x0bzq7l';
+    TEMPLATE_ID = 'template_dzf9trj';
+    PUBLIC_KEY = 'LVsT7wnz6G3_xp-AL';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
         .then(() => {
@@ -625,6 +697,7 @@ function sendEmail() {
             btn.innerText = originalText;
         });
 }
+*/
 
 /**
  * Envío automático y silencioso al finalizar el test
@@ -646,9 +719,9 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
     console.log('📤 Iniciando envío automático de email a:', state.leads.email);
 
     // CONFIGURACIÓN: Todos los casos usan la cuenta principal por ahora
-    let SERVICE_ID = 'service_iroclp9';
-    let TEMPLATE_ID = 'template_dkpkqkf';
-    let PUBLIC_KEY = 'QqvN175XJ37_kz0JR';
+    let SERVICE_ID = 'service_x0bzq7l';
+    let TEMPLATE_ID = 'template_dzf9trj';
+    let PUBLIC_KEY = 'LVsT7wnz6G3_xp-AL';
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY)
         .then(() => {
@@ -683,8 +756,8 @@ function updateAuthUI(userData) {
     buttonsToUpdate.forEach(btn => {
         if (!btn) return;
         const currentText = btn.innerText;
-        // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, etc.)
-        if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar')) {
+        // Buscamos botones que parezcan de inicio (Comenzar, Iniciar, Calcular, etc.)
+        if (currentText.toLowerCase().includes('comenzar') || currentText.toLowerCase().includes('iniciar') || currentText.toLowerCase().includes('calcular')) {
             const firstName = userData.name.split(' ')[0];
             btn.innerText = `Continuar como ${firstName}`;
 
