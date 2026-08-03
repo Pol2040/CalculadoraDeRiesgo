@@ -80,18 +80,46 @@ header {
 .header-logo-section {
     display: flex;
     align-items: center;
-    gap: 1.2rem;
 }
 
 .header-logo-section img {
     height: 3.2rem;
     width: auto;
+    margin-right: 0.8rem;
+}
+
+.header-lex-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1.2rem;
+}
+
+.header-lex-text .lex-title {
+    font-family: var(--font-main);
+    font-size: 1.85rem;
+    font-weight: var(--fw-extrabold);
+    color: #ffffff;
+    line-height: 0.95;
+    letter-spacing: 0.05em;
+}
+
+.header-lex-text .lex-subtitle {
+    font-family: var(--font-main);
+    font-size: 0.58rem;
+    font-weight: var(--fw-bold);
+    color: #ffffff;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    margin-top: 0.15rem;
+    white-space: nowrap;
 }
 
 .header-divider {
     width: 1px;
     height: 2.2rem;
     background-color: rgba(255, 255, 255, 0.15);
+    margin-right: 1.2rem;
 }
 
 .header-subtitle {
