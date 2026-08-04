@@ -510,20 +510,11 @@ main {
     margin-top: auto;
 }
 
-.hero-footer-left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
+.hero-footer-text {
+    color: var(--text-muted);
 }
 
-.hero-footer-left svg {
-    color: var(--secondary);
-    width: 20px;
-    height: 20px;
-}
-
-.hero-footer-right {
+.hero-footer-highlight {
     font-weight: var(--fw-semibold);
     color: var(--secondary);
     letter-spacing: 0.3px;
