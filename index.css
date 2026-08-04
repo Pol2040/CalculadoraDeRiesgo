@@ -82,6 +82,17 @@ header {
     align-items: center;
 }
 
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.logo-link:hover {
+    opacity: 0.85;
+}
+
 .header-logo-section img {
     height: 3.2rem;
     width: auto;
