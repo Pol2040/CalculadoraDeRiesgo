@@ -242,8 +242,14 @@ main {
     align-items: center;
     margin-bottom: 4rem;
     margin-top: 1rem;
-    margin-left: -2rem;
+    margin-left: 0;
     padding-left: 0;
+}
+
+@media (min-width: 1025px) {
+    .hero-container {
+        margin-left: calc(50% - 50vw + 2rem);
+    }
 }
 
 @media (max-width: 992px) {
@@ -251,6 +257,7 @@ main {
         grid-template-columns: 1fr;
         gap: 3rem;
         text-align: center;
+        margin-left: 0;
     }
 }
 
