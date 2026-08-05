@@ -19,14 +19,41 @@
     --fw-bold: 700;
     --fw-extrabold: 800;
     color-scheme: dark;
+
+    /* Variables adaptativas para temas */
+    --card-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    --bg-input: rgba(8, 12, 22, 0.6);
+    --border-input: rgba(255, 255, 255, 0.1);
+    --bg-input-focus: rgba(8, 12, 22, 0.85);
+    --bg-option: rgba(13, 20, 35, 0.55);
+    --border-option: rgba(255, 255, 255, 0.08);
+    --bg-faq: rgba(13, 20, 35, 0.4);
+    --border-faq: rgba(255, 255, 255, 0.05);
+    --bg-select-option: #0f172a;
+    --logo-text: #ffffff;
 }
 
 [data-theme='light'] {
-    /* Forzamos que el tema siga siendo premium dark para mantener la estética LEX de la imagen */
-    --bg-body: #05070c;
-    --bg-body-rgb: 5, 7, 12;
-    --bg-card: rgba(10, 15, 26, 0.65);
-    --border: rgba(255, 255, 255, 0.06);
+    --bg-body: #f1f5f9;
+    --bg-body-rgb: 241, 245, 249;
+    --bg-card: rgba(255, 255, 255, 0.75);
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --glass: rgba(255, 255, 255, 0.8);
+    --border: rgba(15, 23, 42, 0.08);
+    color-scheme: light;
+
+    /* Redefinición para modo claro */
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    --bg-input: rgba(255, 255, 255, 0.8);
+    --border-input: rgba(15, 23, 42, 0.12);
+    --bg-input-focus: rgba(255, 255, 255, 0.95);
+    --bg-option: rgba(255, 255, 255, 0.8);
+    --border-option: rgba(15, 23, 42, 0.08);
+    --bg-faq: rgba(255, 255, 255, 0.6);
+    --border-faq: rgba(15, 23, 42, 0.06);
+    --bg-select-option: #ffffff;
+    --logo-text: #080c16;
 }
 
 * {
@@ -57,6 +84,13 @@ body {
         radial-gradient(circle at 10% 20%, rgba(217, 4, 41, 0.08) 0%, transparent 45%),
         radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 50% 50%, rgba(8, 12, 22, 1) 0%, #05070b 100%);
+}
+
+[data-theme='light'] .bg-mesh {
+    background:
+        radial-gradient(circle at 10% 20%, rgba(217, 4, 41, 0.05) 0%, transparent 45%),
+        radial-gradient(circle at 90% 80%, rgba(56, 189, 248, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(241, 245, 249, 1) 0%, #e2e8f0 100%);
 }
 
 header {
@@ -112,7 +146,7 @@ header {
     font-family: var(--font-main);
     font-size: 1.85rem;
     font-weight: var(--fw-extrabold);
-    color: #ffffff;
+    color: var(--logo-text);
     line-height: 0.95;
     letter-spacing: 0.05em;
 }
@@ -121,7 +155,7 @@ header {
     font-family: var(--font-main);
     font-size: 0.58rem;
     font-weight: var(--fw-bold);
-    color: #ffffff;
+    color: var(--logo-text);
     line-height: 1;
     letter-spacing: 0.08em;
     margin-top: 0.15rem;
@@ -131,7 +165,7 @@ header {
 .header-divider {
     width: 1px;
     height: 2.2rem;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--border);
     margin-right: 1.2rem;
 }
 
@@ -279,7 +313,7 @@ main {
     font-weight: var(--fw-extrabold);
     letter-spacing: -0.02em;
     margin-bottom: 1.2rem;
-    color: #ffffff;
+    color: var(--text-main);
     text-transform: uppercase;
 }
 
@@ -292,7 +326,7 @@ main {
     font-weight: var(--fw-bold);
     line-height: 1.3;
     margin-bottom: 1.2rem;
-    color: #ffffff;
+    color: var(--text-main);
 }
 
 .hero-content .subtitle span.highlight-blue {
@@ -327,7 +361,7 @@ main {
     display: flex;
     align-items: center;
     gap: 0.8rem;
-    color: #ffffff;
+    color: var(--text-main);
     font-size: 0.95rem;
 }
 
@@ -354,7 +388,7 @@ main {
 .hero-info-divider {
     width: 1px;
     height: 2.2rem;
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--border);
 }
 
 @media (max-width: 768px) {
@@ -500,7 +534,7 @@ main {
     border: 1px solid var(--border);
     padding: 3rem;
     border-radius: 24px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--card-shadow);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
 }
@@ -532,8 +566,8 @@ main {
 .form-group select {
     width: 100%;
     padding: 1rem;
-    background: rgba(8, 12, 22, 0.6);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--bg-input);
+    border: 1px solid var(--border-input);
     border-radius: 12px;
     color: var(--text-main);
     font-family: inherit;
@@ -551,7 +585,7 @@ main {
 }
 
 .form-group select option {
-    background: #0f172a;
+    background: var(--bg-select-option);
     color: var(--text-main);
 }
 
@@ -559,7 +593,7 @@ main {
 .form-group select:focus {
     outline: none;
     border-color: var(--primary);
-    background: rgba(8, 12, 22, 0.85);
+    background: var(--bg-input-focus);
     box-shadow: 0 0 0 4px rgba(217, 4, 41, 0.15);
 }
 
@@ -620,8 +654,8 @@ main {
 }
 
 .quiz-option {
-    background: rgba(13, 20, 35, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-option);
+    border: 1px solid var(--border-option);
     padding: 1.5rem 2rem;
     border-radius: 16px;
     color: var(--text-main);
@@ -672,9 +706,57 @@ main {
     color: var(--text-muted);
 }
 
-/* Theme Toggle Button Hidden */
+/* Theme Toggle Button Styles */
 .theme-toggle {
-    display: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    color: var(--text-main);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.08);
+    border-color: var(--primary);
+    box-shadow: 0 4px 15px rgba(217, 4, 41, 0.15);
+}
+
+.theme-toggle svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    position: absolute;
+}
+
+/* Cuando el tema es oscuro (por defecto), mostrar el sol y ocultar la luna */
+[data-theme='dark'] .theme-toggle .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+[data-theme='dark'] .theme-toggle .moon-icon {
+    opacity: 0;
+    transform: rotate(90deg) scale(0);
+}
+
+/* Cuando el tema es claro, mostrar la luna y ocultar el sol */
+[data-theme='light'] .theme-toggle .sun-icon {
+    opacity: 0;
+    transform: rotate(-90deg) scale(0);
+}
+[data-theme='light'] .theme-toggle .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
 }
 
 .logout-link {
@@ -705,8 +787,8 @@ main {
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    background: rgba(13, 20, 35, 0.55);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: var(--bg-option);
+    border: 1px solid var(--border-option);
     padding: 1.5rem;
     border-radius: 12px;
     cursor: pointer;
@@ -750,17 +832,17 @@ main {
 }
 
 .faq-item {
-    background: rgba(13, 20, 35, 0.4);
+    background: var(--bg-faq);
     padding: 2rem;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-faq);
     transition: all 0.3s ease;
 }
 
 .faq-item:hover {
     transform: translateY(-4px);
     border-color: var(--primary);
-    background: rgba(13, 20, 35, 0.55);
+    background: var(--bg-option);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
 }
 
