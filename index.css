@@ -375,51 +375,16 @@ main {
     height: 100vh;
     z-index: -1;
     pointer-events: none;
-    background-image: 
-        linear-gradient(to right, 
-            var(--bg-body) 0%, 
-            rgba(var(--bg-body-rgb), 0.98) 10%, 
-            rgba(var(--bg-body-rgb), 0.92) 22%, 
-            rgba(var(--bg-body-rgb), 0.82) 35%, 
-            rgba(var(--bg-body-rgb), 0.65) 50%, 
-            rgba(var(--bg-body-rgb), 0.45) 65%, 
-            rgba(var(--bg-body-rgb), 0.20) 80%, 
-            rgba(var(--bg-body-rgb), 0.05) 92%, 
-            transparent 100%
-        ),
-        linear-gradient(to top, 
-            var(--bg-body) 0%, 
-            rgba(var(--bg-body-rgb), 0.85) 8%, 
-            rgba(var(--bg-body-rgb), 0.50) 20%, 
-            rgba(var(--bg-body-rgb), 0.15) 35%, 
-            transparent 50%
-        ),
-        linear-gradient(to bottom, 
-            var(--bg-body) 0%, 
-            rgba(var(--bg-body-rgb), 0.80) 6%, 
-            rgba(var(--bg-body-rgb), 0.40) 15%, 
-            rgba(var(--bg-body-rgb), 0.10) 25%, 
-            transparent 35%
-        ),
-        url('camion_hero.jpg');
+    background-image: url('camion_hero.jpg');
     background-size: cover;
     background-position: center right;
-    opacity: 0.9;
 }
 
 @media (max-width: 992px) {
     .hero-background-image {
         width: 100vw;
-        background-image: 
-            linear-gradient(to bottom, 
-                rgba(var(--bg-body-rgb), 0.90) 0%, 
-                rgba(var(--bg-body-rgb), 0.75) 40%, 
-                rgba(var(--bg-body-rgb), 0.85) 75%, 
-                var(--bg-body) 100%
-            ),
-            url('camion_hero.jpg');
+        background-image: url('camion_hero.jpg');
         background-position: center center;
-        opacity: 0.95;
     }
 }
 
