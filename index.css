@@ -412,6 +412,15 @@ main {
     background-image: url('camion_hero.png');
     background-size: cover;
     background-position: center right;
+    /* Difuminar bordes para eliminar el borde negro de la transparencia PNG */
+    -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 8%, black 88%, transparent 100%);
+    -webkit-mask-composite: destination-in;
+    mask-image:
+        linear-gradient(to right, transparent 0%, black 18%, black 85%, transparent 100%),
+        linear-gradient(to bottom, transparent 0%, black 8%, black 88%, transparent 100%);
+    mask-composite: intersect;
 }
 
 @media (max-width: 992px) {
@@ -419,6 +428,12 @@ main {
         width: 100vw;
         background-image: url('camion_hero.png');
         background-position: center center;
+        -webkit-mask-image:
+            linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%);
+        mask-image:
+            linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%);
+        -webkit-mask-composite: destination-in;
+        mask-composite: intersect;
     }
 }
 
