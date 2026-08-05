@@ -375,7 +375,7 @@ main {
     height: 100vh;
     z-index: -1;
     pointer-events: none;
-    background-image: url('camion_hero.jpg');
+    background-image: url('camion_hero.png');
     background-size: cover;
     background-position: center right;
 }
@@ -383,7 +383,7 @@ main {
 @media (max-width: 992px) {
     .hero-background-image {
         width: 100vw;
-        background-image: url('camion_hero.jpg');
+        background-image: url('camion_hero.png');
         background-position: center center;
     }
 }
