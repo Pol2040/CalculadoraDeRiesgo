@@ -31,6 +31,17 @@
     --border-faq: rgba(255, 255, 255, 0.05);
     --bg-select-option: #0f172a;
     --logo-text: #ffffff;
+
+    /* Estilos de selección del cuestionario */
+    --option-hover-bg: rgba(217, 4, 41, 0.08);
+    --option-hover-border: var(--primary);
+    --checkbox-hover-bg: rgba(217, 4, 41, 0.05);
+    --checkbox-accent: var(--primary);
+    --option-active-bg: rgba(217, 4, 41, 0.2);
+    --option-selected-bg: var(--primary);
+    --option-selected-border: var(--primary);
+    --option-selected-text: #ffffff;
+    --option-selected-shadow: 0 8px 25px -4px rgba(217, 4, 41, 0.6), 0 0 15px rgba(217, 4, 41, 0.4);
 }
 
 [data-theme='light'] {
@@ -54,6 +65,17 @@
     --border-faq: rgba(15, 23, 42, 0.06);
     --bg-select-option: #ffffff;
     --logo-text: #080c16;
+
+    /* Estilos de selección del cuestionario en modo claro */
+    --option-hover-bg: rgba(217, 4, 41, 0.08);
+    --option-hover-border: var(--primary);
+    --checkbox-hover-bg: rgba(217, 4, 41, 0.05);
+    --checkbox-accent: var(--primary);
+    --option-active-bg: rgba(217, 4, 41, 0.16);
+    --option-selected-bg: var(--primary);
+    --option-selected-border: var(--primary);
+    --option-selected-text: #ffffff;
+    --option-selected-shadow: 0 8px 25px -4px rgba(217, 4, 41, 0.45), 0 0 15px rgba(217, 4, 41, 0.25);
 }
 
 * {
@@ -678,7 +700,7 @@ main {
     font-size: 1.08rem;
     font-weight: var(--fw-medium);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -687,10 +709,25 @@ main {
 }
 
 .quiz-option:hover {
-    background: rgba(217, 4, 41, 0.08);
-    border-color: var(--primary);
+    background: var(--option-hover-bg);
+    border-color: var(--option-hover-border);
     transform: translateX(8px);
     box-shadow: 0 4px 15px rgba(217, 4, 41, 0.15);
+}
+
+.quiz-option:active {
+    background: var(--option-active-bg);
+    border-color: var(--option-hover-border);
+    transform: translateX(4px) scale(0.99);
+}
+
+.quiz-option.selected {
+    background: var(--option-selected-bg) !important;
+    color: var(--option-selected-text) !important;
+    border-color: var(--option-selected-border) !important;
+    font-weight: var(--fw-bold) !important;
+    transform: translateX(10px) scale(1.02) !important;
+    box-shadow: var(--option-selected-shadow) !important;
 }
 
 .quiz-option::after {
@@ -699,11 +736,18 @@ main {
     font-weight: var(--fw-bold);
     color: var(--primary);
     opacity: 0;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
 }
 
 .quiz-option:hover::after {
     opacity: 1;
+}
+
+.quiz-option.selected::after {
+    opacity: 1;
+    color: var(--option-selected-text);
+    right: 1.2rem;
+    transform: scale(1.25);
 }
 
 #risk-description strong {
@@ -811,15 +855,33 @@ main {
 }
 
 .quiz-checkbox-item:hover {
-    background: rgba(217, 4, 41, 0.05);
-    border-color: var(--primary);
+    background: var(--checkbox-hover-bg);
+    border-color: var(--option-hover-border);
+}
+
+.quiz-checkbox-item:active {
+    background: var(--option-active-bg);
+    border-color: var(--option-hover-border);
+}
+
+.quiz-checkbox-item.selected,
+.quiz-checkbox-item:has(input:checked) {
+    background: var(--option-hover-bg);
+    border-color: var(--option-hover-border);
+    box-shadow: 0 4px 15px rgba(217, 4, 41, 0.35);
+    font-weight: var(--fw-semibold);
+}
+
+[data-theme='light'] .quiz-checkbox-item.selected,
+[data-theme='light'] .quiz-checkbox-item:has(input:checked) {
+    box-shadow: 0 4px 15px rgba(217, 4, 41, 0.25);
 }
 
 .quiz-checkbox-item input[type="checkbox"] {
     width: 20px;
     height: 20px;
     cursor: pointer;
-    accent-color: var(--primary);
+    accent-color: var(--checkbox-accent);
 }
 
 .quiz-checkbox-label {
