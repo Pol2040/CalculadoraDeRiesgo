@@ -361,6 +361,8 @@ function startQuiz() {
  * Renderiza la pregunta actual
  */
 function renderQuestion() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     const question = QUESTIONS[state.currentQuestionIndex];
     const totalQuestions = QUESTIONS.length - 1;
 

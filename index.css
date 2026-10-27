@@ -44,6 +44,10 @@
     --option-selected-shadow: 0 8px 25px -4px rgba(217, 4, 41, 0.6), 0 0 15px rgba(217, 4, 41, 0.4);
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 [data-theme='light'] {
     --bg-body: #f1f5f9;
     --bg-body-rgb: 241, 245, 249;
