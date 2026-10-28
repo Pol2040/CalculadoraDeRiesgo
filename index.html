@@ -12,14 +12,11 @@
     <meta property="og:description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
     <meta property="og:type" content="website">
 
-    <!-- [CONFIGURACIÓN ACTIVA: GitHub Pages para pol2040] -->
-    <meta property="og:image" content="https://pol2040.github.io/CalculadoraDeRiesgo/preview_v2.jpg">
-    <meta property="og:url" content="https://pol2040.github.io/CalculadoraDeRiesgo/">
-    <meta name="twitter:image" content="https://pol2040.github.io/CalculadoraDeRiesgo/preview_v2.jpg">
+    <!-- [Configuracion para vista previa de LEX-RRHH.com.ar] -->
+    <meta property="og:image" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/preview_v2.jpg">
+    <meta property="og:url" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/">
+    <meta name="twitter:image" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/preview_v2.jpg">
 
-    <!-- [NOTA DE CONFIGURACIÓN: Si en el futuro se despliega en el dominio oficial de LEX Recursos Humanos (https://lex-rrhh.com.ar), se deberán reemplazar los valores de las etiquetas activas de arriba por la ruta del nuevo dominio] -->
-
-    <!-- Configuración general de la vista previa -->
     <meta property="og:image:type" content="image/jpeg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -73,7 +70,8 @@
         <div class="auth-buttons">
             <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
                 <!-- Sun icon (shown in dark theme) -->
-                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="5"></circle>
                     <line x1="12" y1="1" x2="12" y2="3"></line>
                     <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -85,7 +83,8 @@
                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
                 </svg>
                 <!-- Moon icon (shown in light theme) -->
-                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
@@ -219,9 +218,13 @@
         <!-- Quiz Section -->
         <section id="quiz-section" class="section">
             <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
                     <div id="question-count" class="step-badge">Pregunta 1 de 14</div>
                     <div style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">EN PROGRESO</div>
+                </div>
+
+                <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="14" aria-valuenow="1">
+                    <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
                 </div>
 
                 <h2 id="question-text" style="font-size: 1.8rem; margin-bottom: 2.5rem; line-height: 1.3;">
