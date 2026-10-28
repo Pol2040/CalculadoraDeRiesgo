@@ -172,6 +172,7 @@ const state = {
         email: ''
     },
     skippedAuth: false,
+    quizCompleted: false,
     currentQuestionIndex: 0,
     totalPoints: 0,
     answers: [],
@@ -180,6 +181,36 @@ const state = {
     // URL de Google Apps Script (Reemplazar con la URL generada al implementar el script)
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbwOp9v-OlWGMuc2ni0gN1PdOA4KzOLpo5e2k9EkiqMGhjntWEDjE0d95w7XqDXqud0K/exec'
 };
+
+/**
+ * Rellena los campos del formulario de registro si ya existen datos
+ */
+function prefillAuthForm() {
+    if (!state.leads) return;
+    if (state.leads.name) {
+        const nameInput = document.getElementById('user-name');
+        if (nameInput) nameInput.value = state.leads.name;
+    }
+    if (state.leads.company) {
+        const companyInput = document.getElementById('user-company');
+        if (companyInput) companyInput.value = state.leads.company;
+    }
+    if (state.leads.fleetSize) {
+        const fleetInput = document.getElementById('user-fleet-size');
+        if (fleetInput) fleetInput.value = state.leads.fleetSize;
+    }
+    if (state.leads.email) {
+        const emailInput = document.getElementById('user-email');
+        if (emailInput) emailInput.value = state.leads.email;
+    }
+    if (state.leads.role) {
+        const roleSelect = document.getElementById('user-role');
+        if (roleSelect) {
+            roleSelect.value = state.leads.role;
+            roleSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+}
 
 /**
  * Funciones de Cooldown (Ban temporal por 1 hora)
@@ -248,7 +279,7 @@ function handleAuth(event) {
 
     const roleElement = document.getElementById('user-role');
     const triggerBtn = document.getElementById('custom-select-trigger');
-    
+
     if (!roleElement || !roleElement.value) {
         if (triggerBtn) {
             triggerBtn.classList.add('invalid');
@@ -293,16 +324,10 @@ function handleAuth(event) {
     alert('¡Registro completado con éxito!');
     updateAuthUI(state.leads);
 
-    showSection('quiz');
-
-    if (state.answers.length > state.currentQuestionIndex) {
-        if (state.currentQuestionIndex < QUESTIONS.length - 1) {
-            state.currentQuestionIndex++;
-            renderQuestion();
-        } else {
-            showResults();
-        }
+    if (state.quizCompleted) {
+        showResults();
     } else {
+        showSection('quiz');
         renderQuestion();
     }
 
@@ -357,6 +382,7 @@ function startQuiz() {
     state.currentQuestionIndex = 0;
     state.totalPoints = 0;
     state.answers = [];
+    state.quizCompleted = false;
     showSection('quiz');
     renderQuestion();
 
@@ -497,18 +523,14 @@ function handleAnswer(points, optionNumber) {
         return;
     }
 
-    // El formulario de auth aparece después de un par de bloques
-    // Ajustado para que aparezca después de la pregunta de Kilómetros (index 3)
-    if (state.currentQuestionIndex === 3 && !state.leads.email && !state.skippedAuth) {
-        showSection('auth');
-        return;
-    }
-
     if (state.currentQuestionIndex < QUESTIONS.length - 1) {
         state.currentQuestionIndex++;
         renderQuestion();
     } else {
-        showResults();
+        // Al responder la última pregunta de la encuesta, se muestra el registro obligatorio
+        state.quizCompleted = true;
+        prefillAuthForm();
+        showSection('auth');
     }
 }
 
@@ -819,6 +841,7 @@ function checkSavedUser() {
             state.leads = userData;
             console.log('Usuario recordado:', state.leads);
             updateAuthUI(userData);
+            prefillAuthForm();
         } catch (e) {
             console.error('Error al cargar usuario guardado', e);
             localStorage.removeItem('riesgo_user');
@@ -868,7 +891,7 @@ function initCustomSelect() {
 
         optionDiv.innerHTML = '<span>' + opt.textContent + '</span>' +
             '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
-                '<polyline points="20 6 9 17 4 12"></polyline>' +
+            '<polyline points="20 6 9 17 4 12"></polyline>' +
             '</svg>';
 
         const pickOption = (e) => {

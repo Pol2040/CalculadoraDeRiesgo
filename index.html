@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 
 <head>
@@ -89,7 +89,8 @@
                 </svg>
             </button>
             <div class="header-cta-group">
-                <button id="header-start-btn" class="btn btn-primary header-start-btn" onclick="startQuiz()">Calcular mi riesgo →</button>
+                <button id="header-start-btn" class="btn btn-primary header-start-btn" onclick="startQuiz()">Calcular mi
+                    riesgo →</button>
                 <a href="#" id="nav-register-btn" class="logout-link"
                     onclick="showSection('auth'); return false;">Registrarse</a>
             </div>
@@ -166,62 +167,6 @@
             </div>
         </section>
 
-        <!-- Step 1: Lead Capture Form -->
-        <section id="auth-section" class="section">
-            <div class="container-center">
-                <div class="card auth-container">
-                    <div class="auth-header">
-                        <span class="step-badge">Registro</span>
-                        <h2 class="auth-title">Registro de Datos</h2>
-                        <p class="auth-subtitle">Complete la información para continuar con la evaluación
-                            y conocer sus resultados.</p>
-                    </div>
-                    <form id="register-form" onsubmit="handleAuth(event)">
-                        <div class="form-group">
-                            <label for="user-name">Nombre completo</label>
-                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required autocomplete="name">
-                        </div>
-                                                <div class="form-group">
-                            <label for="user-role">Cargo</label>
-                            <div class="custom-select-wrapper" id="user-role-wrapper">
-                                <select id="user-role" class="custom-select-native" required tabindex="-1" aria-hidden="true">
-                                    <option value="" disabled selected>Seleccione su cargo</option>
-                                    <option value="Gerente de LogÃ­stica">Gerente de LogÃ­stica</option>
-                                    <option value="Operaciones">Operaciones</option>
-                                    <option value="RRHH">RRHH</option>
-                                    <option value="DueÃ±o">DueÃ±o</option>
-                                    <option value="Seguridad e Higiene">Seguridad e Higiene</option>
-                                </select>
-                                <button type="button" class="custom-select-trigger" id="custom-select-trigger" aria-haspopup="listbox" aria-expanded="false">
-                                    <span class="custom-select-label placeholder" id="custom-select-label">Seleccione su cargo</span>
-                                    <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                        <polyline points="6 9 12 15 18 9"></polyline>
-                                    </svg>
-                                </button>
-                                <div class="custom-select-options" id="custom-select-options" role="listbox"></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-company">Empresa</label>
-                            <input type="text" id="user-company" placeholder="Nombre de su organización" required autocomplete="organization">
-                        </div>
-                        <div class="form-group">
-                            <label for="user-fleet-size">Tamaño de la flota</label>
-                            <input type="text" id="user-fleet-size"
-                                placeholder="Numero de camiones con los que se cuenta" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="user-email">Correo electrónico corporativo</label>
-                            <input type="email" id="user-email" placeholder="email@empresa.com" required autocomplete="email">
-                        </div>
-                        <button type="submit" id="auth-submit-btn" class="btn btn-primary auth-submit-btn">
-                            Registrarse y continuar
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </section>
-
         <!-- Quiz Section -->
         <section id="quiz-section" class="section">
             <div class="card quiz-card">
@@ -230,7 +175,8 @@
                     <div class="quiz-status">EN PROGRESO</div>
                 </div>
 
-                <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="14" aria-valuenow="1">
+                <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="14"
+                    aria-valuenow="1">
                     <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
                 </div>
 
@@ -240,6 +186,68 @@
 
                 <div id="quiz-options" class="quiz-grid">
                     <!-- Opciones se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Capture Form (Obligatorio al final de la encuesta) -->
+        <section id="auth-section" class="section">
+            <div class="container-center">
+                <div class="card auth-container">
+                    <div class="auth-header">
+                        <span class="step-badge">Paso Final</span>
+                        <h2 class="auth-title">Registro de Datos</h2>
+                        <p class="auth-subtitle">Complete la información para conocer sus resultados.</p>
+                    </div>
+                    <form id="register-form" onsubmit="handleAuth(event)">
+                        <div class="form-group">
+                            <label for="user-name">Nombre completo</label>
+                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-role">Cargo</label>
+                            <div class="custom-select-wrapper" id="user-role-wrapper">
+                                <select id="user-role" class="custom-select-native" required tabindex="-1"
+                                    aria-hidden="true">
+                                    <option value="" disabled selected>Seleccione su cargo</option>
+                                    <option value="Gerente de Logistica">Gerente de Logistica</option>
+                                    <option value="Operaciones">Operaciones</option>
+                                    <option value="RRHH">RRHH</option>
+                                    <option value="Dueño">Dueño</option>
+                                    <option value="Seguridad e Higiene">Seguridad e Higiene</option>
+                                </select>
+                                <button type="button" class="custom-select-trigger" id="custom-select-trigger"
+                                    aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="custom-select-label placeholder" id="custom-select-label">Seleccione su
+                                        cargo</span>
+                                    <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                                <div class="custom-select-options" id="custom-select-options" role="listbox"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-company">Empresa</label>
+                            <input type="text" id="user-company" placeholder="Nombre de su organización" required
+                                autocomplete="organization">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-fleet-size">Tamaño de la flota</label>
+                            <input type="text" id="user-fleet-size"
+                                placeholder="Numero de camiones con los que se cuenta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-email">Correo electrónico corporativo</label>
+                            <input type="email" id="user-email" placeholder="email@empresa.com" required
+                                autocomplete="email">
+                        </div>
+                        <button type="submit" id="auth-submit-btn" class="btn btn-primary auth-submit-btn">
+                            Ver mis resultados →
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>
