@@ -1072,28 +1072,6 @@ main {
     box-shadow: var(--option-selected-shadow) !important;
 }
 
-.quiz-option::after {
-    content: 'â†’';
-    font-size: 1.25rem;
-    font-weight: var(--fw-bold);
-    color: var(--primary);
-    position: absolute;
-    right: 1.2rem;
-    opacity: 0;
-    transition: all 0.25s ease;
-}
-
-.quiz-option:hover::after {
-    opacity: 1;
-}
-
-.quiz-option.selected::after {
-    opacity: 1;
-    color: var(--option-selected-text);
-    right: 1.1rem;
-    transform: scale(1.2);
-}
-
 /* Checkbox Multiple Selection */
 .quiz-checkbox-group {
     display: flex;
@@ -1682,11 +1660,6 @@ main {
     .quiz-option:hover,
     .quiz-option.selected {
         transform: translateX(4px) !important;
-    }
-
-    .quiz-option::after {
-        right: 0.8rem;
-        font-size: 1.1rem;
     }
 
     .quiz-checkbox-item {
