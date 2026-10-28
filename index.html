@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Calculadora de Riesgo | Transporte de carga</title>
     <meta name="description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
 
@@ -49,7 +49,7 @@
 <body>
     <div class="bg-mesh"></div>
 
-    <header>
+    <header class="app-header">
         <div class="header-logo-section">
             <a href="https://bio.site/LEXRRHH" target="_blank" rel="noopener noreferrer" class="logo-link">
                 <img src="lex_vector.svg" alt="LEX Logo">
@@ -88,9 +88,8 @@
                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
             </button>
-            <div style="display: flex; flex-direction: column; align-items: center; min-width: 180px;">
-                <button id="header-start-btn" class="btn btn-primary" onclick="startQuiz()">Calcular mi riesgo
-                    →</button>
+            <div class="header-cta-group">
+                <button id="header-start-btn" class="btn btn-primary header-start-btn" onclick="startQuiz()">Calcular mi riesgo →</button>
                 <a href="#" id="nav-register-btn" class="logout-link"
                     onclick="showSection('auth'); return false;">Registrarse</a>
             </div>
@@ -171,19 +170,19 @@
         <section id="auth-section" class="section">
             <div class="container-center">
                 <div class="card auth-container">
-                    <div style="text-align: center; margin-bottom: 2rem;">
+                    <div class="auth-header">
                         <span class="step-badge">Registro</span>
-                        <h2 style="font-size: 2rem; margin-top: 1rem;">Registro de Datos</h2>
-                        <p style="color: var(--text-muted);">Complete la información para continuar con la evaluación
+                        <h2 class="auth-title">Registro de Datos</h2>
+                        <p class="auth-subtitle">Complete la información para continuar con la evaluación
                             y conocer sus resultados.</p>
                     </div>
                     <form id="register-form" onsubmit="handleAuth(event)">
                         <div class="form-group">
-                            <label>Nombre completo</label>
-                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required>
+                            <label for="user-name">Nombre completo</label>
+                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required autocomplete="name">
                         </div>
                         <div class="form-group">
-                            <label>Cargo</label>
+                            <label for="user-role">Cargo</label>
                             <select id="user-role" required>
                                 <option value="" disabled selected>Seleccione su cargo</option>
                                 <option value="Gerente de Logística">Gerente de Logística</option>
@@ -194,20 +193,19 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Empresa</label>
-                            <input type="text" id="user-company" placeholder="Nombre de su organización" required>
+                            <label for="user-company">Empresa</label>
+                            <input type="text" id="user-company" placeholder="Nombre de su organización" required autocomplete="organization">
                         </div>
                         <div class="form-group">
-                            <label>Tamaño de la flota</label>
+                            <label for="user-fleet-size">Tamaño de la flota</label>
                             <input type="text" id="user-fleet-size"
                                 placeholder="Numero de camiones con los que se cuenta" required>
                         </div>
                         <div class="form-group">
-                            <label>Correo electrónico corporativo</label>
-                            <input type="email" id="user-email" placeholder="email@empresa.com" required>
+                            <label for="user-email">Correo electrónico corporativo</label>
+                            <input type="email" id="user-email" placeholder="email@empresa.com" required autocomplete="email">
                         </div>
-                        <button type="submit" id="auth-submit-btn" class="btn btn-primary"
-                            style="width: 100%; margin-top: 1.5rem; padding: 1.1rem;">
+                        <button type="submit" id="auth-submit-btn" class="btn btn-primary auth-submit-btn">
                             Registrarse y continuar
                         </button>
                     </form>
@@ -217,17 +215,17 @@
 
         <!-- Quiz Section -->
         <section id="quiz-section" class="section">
-            <div class="card">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+            <div class="card quiz-card">
+                <div class="quiz-header-bar">
                     <div id="question-count" class="step-badge">Pregunta 1 de 14</div>
-                    <div style="color: var(--primary); font-weight: 600; font-size: 0.9rem;">EN PROGRESO</div>
+                    <div class="quiz-status">EN PROGRESO</div>
                 </div>
 
                 <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="14" aria-valuenow="1">
                     <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
                 </div>
 
-                <h2 id="question-text" style="font-size: 1.8rem; margin-bottom: 2.5rem; line-height: 1.3;">
+                <h2 id="question-text" class="quiz-question-text">
                     <!-- Cargado dinámicamente -->
                 </h2>
 
@@ -239,19 +237,15 @@
 
         <!-- Result Section -->
         <section id="result-section" class="section">
-            <div class="card" style="text-align: center; max-width: 700px; margin: 0 auto;">
-                <div style="margin-bottom: 2rem;">
-                    <span class="step-badge"
-                        style="background: rgba(16, 185, 129, 0.1); color: var(--accent); border-color: rgba(16, 185, 129, 0.2);">Radiografía
-                        Completada</span>
+            <div class="card result-card">
+                <div class="result-badge-wrapper">
+                    <span class="step-badge result-badge">Radiografía Completada</span>
                 </div>
-                <h2 style="font-size: 3rem; margin-bottom: 1.5rem;">Tu Perfil: <span id="risk-type">Calculando...</span>
-                </h2>
-                <div id="risk-description"
-                    style="color: var(--text-muted); font-size: 1.2rem; margin-bottom: 3rem; line-height: 1.6;">
+                <h2 class="result-title">Tu Perfil: <span id="risk-type">Calculando...</span></h2>
+                <div id="risk-description" class="result-description">
                     <!-- Cargado dinámicamente -->
                 </div>
-                <div style="display: flex; gap: 1rem; justify-content: center;" class="no-print">
+                <div class="result-actions no-print">
                     <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
                     <button class="btn btn-outline" onclick="window.print()">Descargar PDF</button>
                     <!-- <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button> -->
@@ -281,14 +275,14 @@
                 </div>
             </div>
         </section>
+
         <!-- FAQ Section -->
         <section id="faq-section" class="section">
             <div class="container-center">
-                <div class="card" style="max-width: 800px; width: 100%;">
-                    <div style="text-align: center; margin-bottom: 3rem;">
-                        <h2 style="font-size: 2.5rem; margin-top: 1rem;">Preguntas frecuentes</h2>
-                        <p style="color: var(--text-muted);">Todo lo que necesita saber sobre nuestra Radiografía de
-                            Riesgo</p>
+                <div class="card faq-card">
+                    <div class="faq-header">
+                        <h2 class="faq-title">Preguntas frecuentes</h2>
+                        <p class="faq-subtitle">Todo lo que necesita saber sobre nuestra Radiografía de Riesgo</p>
                     </div>
 
                     <div class="faq-grid">
@@ -310,7 +304,7 @@
                         </div>
                     </div>
 
-                    <div style="text-align: center; margin-top: 3rem;">
+                    <div class="faq-footer">
                         <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
                     </div>
                 </div>
