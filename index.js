@@ -246,9 +246,20 @@ function showSection(sectionName) {
 function handleAuth(event) {
     event.preventDefault();
 
+    const roleElement = document.getElementById('user-role');
+    const triggerBtn = document.getElementById('custom-select-trigger');
+    
+    if (!roleElement || !roleElement.value) {
+        if (triggerBtn) {
+            triggerBtn.classList.add('invalid');
+            triggerBtn.focus();
+        }
+        return;
+    }
+
     const userData = {
         name: document.getElementById('user-name').value,
-        role: document.getElementById('user-role').value,
+        role: roleElement.value,
         company: document.getElementById('user-company').value,
         fleetSize: document.getElementById('user-fleet-size').value,
         email: document.getElementById('user-email').value.trim().toLowerCase()
@@ -745,6 +756,7 @@ function sendAutoEmail(riskType, emailSubject, emailBody) {
 
 // Inicialización
 document.addEventListener('DOMContentLoaded', () => {
+    initCustomSelect();
     // Se comenta inicialización global para permitir usar distintas cuentas de EmailJS
     // emailjs.init("QqvN175XJ37_kz0JR");
     checkSavedUser();
@@ -823,4 +835,137 @@ function logout() {
 
     // Recargar para limpiar todo el estado limpiamente
     window.location.reload();
+}
+
+
+/**
+ * Inicializa el menÃº desplegable personalizado para el apartado 'Cargo'
+ * integrando la estÃ©tica general en Modo Claro y Modo Oscuro.
+ */
+function initCustomSelect() {
+    const selectEl = document.getElementById('user-role');
+    const wrapper = document.getElementById('user-role-wrapper');
+    const trigger = document.getElementById('custom-select-trigger');
+    const label = document.getElementById('custom-select-label');
+    const optionsContainer = document.getElementById('custom-select-options');
+
+    if (!selectEl || !wrapper || !trigger || !optionsContainer || !label) return;
+
+    optionsContainer.innerHTML = '';
+
+    const options = Array.from(selectEl.options);
+    options.forEach(opt => {
+        if (opt.disabled) return;
+
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'custom-select-option';
+        if (selectEl.value === opt.value) {
+            optionDiv.classList.add('selected');
+        }
+        optionDiv.dataset.value = opt.value;
+        optionDiv.setAttribute('role', 'option');
+        optionDiv.setAttribute('tabindex', '0');
+
+        optionDiv.innerHTML = '<span>' + opt.textContent + '</span>' +
+            '<svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+                '<polyline points="20 6 9 17 4 12"></polyline>' +
+            '</svg>';
+
+        const pickOption = (e) => {
+            if (e) e.stopPropagation();
+            selectOption(opt.value, opt.textContent);
+        };
+
+        optionDiv.addEventListener('click', pickOption);
+        optionDiv.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                pickOption(e);
+            }
+        });
+
+        optionsContainer.appendChild(optionDiv);
+    });
+
+    function selectOption(val, text) {
+        selectEl.value = val;
+        label.textContent = text;
+        label.classList.remove('placeholder');
+        trigger.classList.remove('invalid');
+
+        const allOpts = optionsContainer.querySelectorAll('.custom-select-option');
+        allOpts.forEach(item => {
+            if (item.dataset.value === val) {
+                item.classList.add('selected');
+            } else {
+                item.classList.remove('selected');
+            }
+        });
+
+        closeDropdown();
+        selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function toggleDropdown() {
+        if (wrapper.classList.contains('open')) {
+            closeDropdown();
+        } else {
+            openDropdown();
+        }
+    }
+
+    function openDropdown() {
+        wrapper.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeDropdown() {
+        wrapper.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleDropdown();
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!wrapper.contains(e.target)) {
+            closeDropdown();
+        }
+    });
+
+    trigger.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            if (!wrapper.classList.contains('open')) {
+                openDropdown();
+            } else {
+                const selectedOpt = optionsContainer.querySelector('.custom-select-option.selected') || optionsContainer.firstElementChild;
+                if (selectedOpt) selectedOpt.focus();
+            }
+        } else if (e.key === 'Escape') {
+            closeDropdown();
+        }
+    });
+
+    selectEl.addEventListener('change', () => {
+        const currentOpt = Array.from(selectEl.options).find(o => o.value === selectEl.value);
+        if (currentOpt && !currentOpt.disabled) {
+            label.textContent = currentOpt.textContent;
+            label.classList.remove('placeholder');
+            trigger.classList.remove('invalid');
+            optionsContainer.querySelectorAll('.custom-select-option').forEach(item => {
+                if (item.dataset.value === selectEl.value) {
+                    item.classList.add('selected');
+                } else {
+                    item.classList.remove('selected');
+                }
+            });
+        } else {
+            label.textContent = 'Seleccione su cargo';
+            label.classList.add('placeholder');
+            optionsContainer.querySelectorAll('.custom-select-option').forEach(item => item.classList.remove('selected'));
+        }
+    });
 }
