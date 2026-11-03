@@ -24,8 +24,8 @@ Este proyecto es una herramienta interactiva diseñada para gerentes, dueños de
 
 1. **Clona o descarga** este repositorio.
 2. Abre el archivo `index.html` en cualquier navegador moderno.
-3. Completa el registro inicial.
-4. Responde las 14 preguntas de la radiografía.
+3. Responde las preguntas del diagnóstico.
+4. Completa el registro de datos al finalizar para conocer tus resultados.
 5. Descarga tu informe detallado en PDF.
 
 ---
