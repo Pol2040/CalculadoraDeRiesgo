@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Calculadora de Riesgo | Transporte de carga</title>
+    <meta name="description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
+
+    <!-- Meta etiquetas para vista previa en redes sociales (WhatsApp, Facebook, etc.) -->
+    <meta property="og:title" content="Calculadora de Riesgo | Transporte de carga">
+    <meta property="og:description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
+    <meta property="og:type" content="website">
+
+    <!-- [Configuracion para vista previa de LEX-RRHH.com.ar] -->
+    <meta property="og:image" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/preview_v2.jpg">
+    <meta property="og:url" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/">
+    <meta name="twitter:image" content="https://lex-rrhh.com.ar/calculadora-de-riesgos/preview_v2.jpg">
+
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Vista previa de la Calculadora de Riesgo Operativo">
+
+    <!-- Twitter Card (para redes sociales que lo requieran como X/Twitter) -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Calculadora de Riesgo | Transporte de carga">
+    <meta name="twitter:description" content="Radiografía Ejecutiva de Riesgo Operativo en Transporte de Cargas">
+
+    <!-- Ícono de la Pestaña (Favicon) -->
+    <link rel="icon" href="lex_vector.svg" type="image/svg+xml">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="index.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+        // Inicialización inmediata del tema para evitar destellos
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="bg-mesh"></div>
+
+    <header class="app-header">
+        <div class="header-logo-section">
+            <a href="https://bio.site/LEXRRHH" target="_blank" rel="noopener noreferrer" class="logo-link">
+                <img src="lex_vector.svg" alt="LEX Logo">
+                <div class="header-lex-text">
+                    <span class="lex-title">LEX</span>
+                    <span class="lex-subtitle">RECURSOS HUMANOS</span>
+                </div>
+            </a>
+            <div class="header-divider"></div>
+            <div class="header-subtitle">Calculadora<br>de Riesgo Operativo</div>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="active" onclick="showSection('hero'); return false;">Inicio</a>
+            <a href="Conducci%C3%B3n%20segura%20y%20eficiente.%20Junio%202026.pdf"
+                download="Conducción segura y eficiente. Junio 2026.pdf">Cursos in company</a>
+            <a href="#" onclick="showSection('faq'); return false;">Preguntas frecuentes</a>
+        </nav>
+        <div class="auth-buttons">
+            <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="Cambiar tema">
+                <!-- Sun icon (shown in dark theme) -->
+                <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <!-- Moon icon (shown in light theme) -->
+                <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+            <div class="header-cta-group">
+                <button id="header-start-btn" class="btn btn-primary header-start-btn" onclick="startQuiz()">Calcular mi
+                    riesgo →</button>
+                <a href="#" id="nav-register-btn" class="logout-link"
+                    onclick="showSection('auth'); return false;">Registrarse</a>
+            </div>
+        </div>
+    </header>
+
+    <main id="app-content">
+        <!-- Hero Section -->
+        <section id="hero-section" class="section active">
+            <div class="hero-background-image"></div>
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1>¿Tu flota tiene un<br><span class="highlight-red">riesgo oculto?</span></h1>
+                    <div class="subtitle">
+                        Medí el factor que más impacta en tus costos:<br>
+                        <span class="highlight-blue">LA PERSONA DETRÁS DEL VOLANTE</span>
+                    </div>
+                    <p class="description">
+                        Detectá riesgos humanos, hábitos de conducción y puntos críticos <br>
+                        antes de que se conviertan en accidentes, costos o unidades paradas.
+                    </p>
+
+                    <button id="hero-start-btn" class="btn btn-primary hero-cta-btn" onclick="startQuiz()">
+                        Comenzar diagnóstico gratis →
+                    </button>
+
+                    <div class="hero-info-row">
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <div>
+                                <span class="info-val">3 MINUTOS</span>
+                                <span class="info-label">para completarlo</span>
+                            </div>
+                        </div>
+                        <div class="hero-info-divider"></div>
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                            </svg>
+                            <div>
+                                <span class="info-val">RESULTADO</span>
+                                <span class="info-label">inmediato</span>
+                            </div>
+                        </div>
+                        <div class="hero-info-divider"></div>
+                        <div class="hero-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <div>
+                                <span class="info-val">CONFIDENCIAL</span>
+                                <span class="info-label">y sin compromiso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="hero-footer-bar">
+                <div class="hero-footer-text">
+                    Herramienta utilizada por empresas de transporte que toman decisiones basadas en datos.
+                </div>
+                <div class="hero-footer-highlight">
+                    Mejores decisiones. Menos riesgo. Más resultados.
+                </div>
+            </div>
+        </section>
+
+        <!-- Quiz Section -->
+        <section id="quiz-section" class="section">
+            <div class="card quiz-card">
+                <div class="quiz-header-bar">
+                    <div id="question-count" class="step-badge">Pregunta 1 de 14</div>
+                    <div class="quiz-status">EN PROGRESO</div>
+                </div>
+
+                <div class="quiz-progress-track" role="progressbar" aria-valuemin="1" aria-valuemax="14"
+                    aria-valuenow="1">
+                    <div id="quiz-progress-bar" class="quiz-progress-fill"></div>
+                </div>
+
+                <h2 id="question-text" class="quiz-question-text">
+                    <!-- Cargado dinámicamente -->
+                </h2>
+
+                <div id="quiz-options" class="quiz-grid">
+                    <!-- Opciones se cargarán dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Lead Capture Form (Obligatorio al final de la encuesta) -->
+        <section id="auth-section" class="section">
+            <div class="container-center">
+                <div class="card auth-container">
+                    <div class="auth-header">
+                        <span class="step-badge">Paso Final</span>
+                        <h2 class="auth-title">Registro de Datos</h2>
+                        <p class="auth-subtitle">Complete la información para conocer sus resultados.</p>
+                    </div>
+                    <form id="register-form" onsubmit="handleAuth(event)">
+                        <div class="form-group">
+                            <label for="user-name">Nombre completo</label>
+                            <input type="text" id="user-name" placeholder="Ej. Juan Pérez" required autocomplete="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-role">Cargo</label>
+                            <div class="custom-select-wrapper" id="user-role-wrapper">
+                                <select id="user-role" class="custom-select-native" required tabindex="-1"
+                                    aria-hidden="true">
+                                    <option value="" disabled selected>Seleccione su cargo</option>
+                                    <option value="Gerente de Logistica">Gerente de Logistica</option>
+                                    <option value="Operaciones">Operaciones</option>
+                                    <option value="RRHH">RRHH</option>
+                                    <option value="Dueño">Dueño</option>
+                                    <option value="Seguridad e Higiene">Seguridad e Higiene</option>
+                                </select>
+                                <button type="button" class="custom-select-trigger" id="custom-select-trigger"
+                                    aria-haspopup="listbox" aria-expanded="false">
+                                    <span class="custom-select-label placeholder" id="custom-select-label">Seleccione su
+                                        cargo</span>
+                                    <svg class="custom-select-arrow" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                                <div class="custom-select-options" id="custom-select-options" role="listbox"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-company">Empresa</label>
+                            <input type="text" id="user-company" placeholder="Nombre de su organización" required
+                                autocomplete="organization">
+                        </div>
+                        <div class="form-group">
+                            <label for="user-fleet-size">Tamaño de la flota</label>
+                            <input type="text" id="user-fleet-size"
+                                placeholder="Numero de camiones con los que se cuenta" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="user-email">Correo electrónico corporativo</label>
+                            <input type="email" id="user-email" placeholder="email@empresa.com" required
+                                autocomplete="email">
+                        </div>
+                        <button type="submit" id="auth-submit-btn" class="btn btn-primary auth-submit-btn">
+                            Ver mis resultados →
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Result Section -->
+        <section id="result-section" class="section">
+            <div class="card result-card">
+                <div class="result-badge-wrapper">
+                    <span class="step-badge result-badge">Radiografía Completada</span>
+                </div>
+                <h2 class="result-title">Tu Perfil: <span id="risk-type">Calculando...</span></h2>
+                <div id="risk-description" class="result-description">
+                    <!-- Cargado dinámicamente -->
+                </div>
+                <div class="result-actions no-print">
+                    <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
+                    <button class="btn btn-outline" onclick="window.print()">Descargar PDF</button>
+                    <!-- <button class="btn btn-secondary" onclick="sendEmail()">Enviar por Email</button> -->
+                </div>
+            </div>
+
+            <!-- Contenedor para impresión (oculto en pantalla) -->
+            <div id="pdf-container" class="print-only">
+                <div style="position: relative; margin-bottom: 2.5rem; padding-top: 4.5rem;">
+                    <img src="lex_vector.svg" alt="LEX Logo"
+                        style="position: absolute; top: 0; left: 0; height: 3.5rem; width: auto;">
+                    <div style="text-align: center;">
+                        <h1 style="color: #000; font-size: 26pt; font-weight: 800; margin-bottom: 0.2rem;">Informe de
+                            Radiografía Ejecutiva de Riesgo</h1>
+                        <p style="color: #666; font-size: 14pt;">LEX Recursos Humanos</p>
+                    </div>
+                </div>
+                <div
+                    style="margin-top: 1rem; border-top: 1px solid #eee; padding-top: 1.5rem; font-size: 11pt; color: #333; text-align: left; line-height: 1.6;">
+                    <p><strong>PARA:</strong> <span id="pdf-user-name"></span></p>
+                    <p><strong>EMPRESA:</strong> <span id="pdf-user-company"></span></p>
+                    <p><strong>FECHA:</strong> <span id="pdf-date"></span></p>
+                </div>
+                <div id="pdf-content"
+                    style="font-family: 'Open Sans', sans-serif; font-size: 12pt; line-height: 1.6; color: #000; background: transparent; border: none; padding: 0;">
+                    <!-- Cargado dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq-section" class="section">
+            <div class="container-center">
+                <div class="card faq-card">
+                    <div class="faq-header">
+                        <h2 class="faq-title">Preguntas frecuentes</h2>
+                        <p class="faq-subtitle">Todo lo que necesita saber sobre nuestra Radiografía de Riesgo</p>
+                    </div>
+
+                    <div class="faq-grid">
+                        <div class="faq-item">
+                            <h3>¿Tiene costo?</h3>
+                            <p>No. El diagnóstico es sin cargo.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Es una auditoría?</h3>
+                            <p>No. Es una herramienta de análisis preventivo.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Cuánto tiempo lleva?</h3>
+                            <p>Entre 10 y 15 minutos.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h3>¿Qué pasa después?</h3>
+                            <p>Usted decide. El informe no obliga a contratar ningún servicio.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-footer">
+                        <button class="btn btn-primary" onclick="showSection('hero')">Volver al inicio</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
